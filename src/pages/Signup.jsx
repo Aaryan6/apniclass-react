@@ -1,31 +1,90 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+} from "firebase/firestore";
+
+import { db } from "../firebase-config";
+import bcrypt from "bcryptjs";
+import { useDispatch } from "react-redux";
+import { signup } from "../actions/auth";
 
 const Signup = () => {
   const name = useRef();
   const email = useRef();
-  const password = useRef();
+  const Password = useRef();
   const cpassword = useRef();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const postData = async () => {
+    const hashedPassword = await bcrypt.hash(Password.current.value, 10);
+    const userRef = await addDoc(collection(db, "users"), {
+      name: name.current.value,
+      email: email.current.value,
+      password: hashedPassword,
+      profileImage:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+      joinedOn: new Date(),
+    });
+    const docRef = doc(db, "users", userRef.id);
+    const docSnap = await getDoc(docRef);
+    const { password, ...other } = docSnap.data();
+    other["id"] = userRef.id;
+    alert("successfully sign up");
+    localStorage.setItem("ac_user", JSON.stringify(other));
+    console.log(other, userRef.id);
+    navigate("/");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.current.value !== cpassword.current.value) {
+    if (Password.current.value !== cpassword.current.value) {
+      console.log(Password.current.value, cpassword.current.value);
       cpassword.current.setCustomValidity("Password doesn't match!");
     } else {
-      localStorage.setItem(
-        "ac_user",
-        JSON.stringify({
-          name: name.current.value,
-          email: email.current.value,
-          password: password.current.value,
-          profileImage:
-            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-        })
+      dispatch(
+        signup(
+          {
+            name: name.current.value,
+            email: email.current.value,
+            password: Password.current.value,
+          },
+          navigate
+        )
       );
-      navigate("/");
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (Password.current.value !== cpassword.current.value) {
+  //     console.log(Password.current.value, cpassword.current.value);
+  //     cpassword.current.setCustomValidity("Password doesn't match!");
+  //   } else {
+  //     fetchUser();
+  //   }
+  // };
+
+  // const fetchUser = async () => {
+  //   const q = query(
+  //     collection(db, "users"),
+  //     where("email", "==", email.current.value)
+  //   );
+
+  //   const querySnapshot = await getDocs(q);
+  //   if (querySnapshot.docs.length < 1) {
+  //     postData();
+  //   } else {
+  //     alert("User already exists.");
+  //   }
+  // };
 
   return (
     <div className="h-screen grid items-center justify-center">
@@ -66,7 +125,7 @@ const Signup = () => {
             type="password"
             placeholder="******"
             id="password"
-            ref={password}
+            ref={Password}
             required
             className="border-solid border-2 border-slate-100 text-sm px-3 py-3 outline-none w-full"
           />

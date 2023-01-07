@@ -1,24 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineLogout } from "react-icons/ai";
+import { IoNotificationsOutline } from "react-icons/io5";
+import { AiOutlinePlus } from "react-icons/ai";
+import { db } from "../firebase-config";
+import { doc, getDoc } from "firebase/firestore";
+import Avatar from "../assets/noavatar.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../actions/currentUser";
+// https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80
+
 const Navbar = () => {
-  const [user] = useState(JSON.parse(localStorage.getItem("ac_user")));
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.removeItem("ac_user");
-    navigate("/login");
-  };
+  const docRef = doc(db, "users", "lj6X4D1B1aeGmRhkIRlg");
+  const User = useSelector((state) => state.currentUserReducer?.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setCurrentUser(JSON.parse(localStorage.getItem("ac_user"))));
+  }, []);
 
   return (
     <div
       className={`px-5 h-16 flex items-center justify-between bg-white shadow-sm sticky top-0 z-30 xl:px-10
-          ${!user && "hidden"}`}
+        `}
     >
       <Link to="/">
         <h1 className="text-xl font-bold font-poppins">ApniClass</h1>
       </Link>
       <ul className="flex">
-        {!user ? (
+        {!User ? (
           <>
             <Link to="/login">
               <li className="mr-1">Login</li>
@@ -30,17 +41,22 @@ const Navbar = () => {
           </>
         ) : (
           <div className="flex items-center">
-            <Link to="/profile">
+            <Link to="/share" className="hidden md:flex">
+              <AiOutlinePlus className="transition ease-in-out delay-150 duration-300 text-4xl p-1.5 mr-3 text-gray-600 bg-slate-200 rounded-full border-white" />
+            </Link>
+            <Link to="/profile" className="relative">
+              <div className="absolute -top-2 -right-1.5 bg-red-500 text-white rounded-full grid place-items-center text-xs w-5 h-5">
+                <span className="mt-0.5">2</span>
+              </div>
+              <IoNotificationsOutline className="text-2xl" />
+            </Link>
+            <Link to={`/profile/${User?._id}`} className="hidden md:flex">
               <img
-                src={user?.profileImage}
+                src={User?.profileImage ? User?.profileImage : Avatar}
                 alt=""
-                className="w-9 h-9 object-cover rounded-full"
+                className={`ml-4 transition ease-in-out delay-150 duration-30 w-9 h-9 object-cover rounded-full border-2 border-white`}
               />
             </Link>
-            <AiOutlineLogout
-              className="text-2xl ml-3 text-gray-700 cursor-pointer"
-              onClick={handleLogout}
-            />
           </div>
         )}
       </ul>
