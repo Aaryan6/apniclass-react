@@ -1,20 +1,20 @@
 import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Profile from "./pages/Profile";
-import Navbar from "./comonents/Navbar";
+import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AddPost from "./pages/AddPost";
-import BottmNavigation from "./comonents/BottmNavigation";
+import BottmNavigation from "./components/BottmNavigation";
 import Open from "./pages/Open";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllUsers } from "./actions/user";
 import { getAllPosts } from "./actions/post";
 
 function App() {
   const dispatch = useDispatch();
-
+  const [showSidebar, setShowSidebar] = useState(true);
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());
@@ -23,10 +23,10 @@ function App() {
   return (
     <div className="App bg-zinc-100 min-h-screen w-full font-poppins">
       <Router>
-        <Navbar />
+        <Navbar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         <BottmNavigation />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<Home showSidebar={showSidebar} />} />
           <Route path="/profile/:id" element={<Profile />} />
           <Route path="/share" element={<AddPost />} />
           <Route path="/login" element={<Login />} />

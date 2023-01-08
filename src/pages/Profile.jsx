@@ -14,7 +14,7 @@ import {
 } from "firebase/storage";
 import app from "../firebase-config";
 import { updateUser } from "../actions/user";
-import Post from "../comonents/Post";
+import Post from "../components/Post";
 
 const Profile = () => {
   const userId = window.location.pathname.split("/")[2];

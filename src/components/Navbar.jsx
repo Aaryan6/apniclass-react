@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
+import { HiBars3BottomLeft } from "react-icons/hi2";
 import { db } from "../firebase-config";
 import { doc, getDoc } from "firebase/firestore";
 import Avatar from "../assets/noavatar.png";
@@ -9,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../actions/currentUser";
 // https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80
 
-const Navbar = () => {
+const Navbar = ({ setShowSidebar, showSidebar }) => {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   const docRef = doc(db, "users", "lj6X4D1B1aeGmRhkIRlg");
@@ -22,12 +23,18 @@ const Navbar = () => {
 
   return (
     <div
-      className={`px-5 h-16 flex items-center justify-between bg-white shadow-sm sticky top-0 z-30 xl:px-10
+      className={`px-4 h-16 flex items-center justify-between bg-white shadow-sm sticky top-0 z-30 xl:px-5
         `}
     >
-      <Link to="/">
-        <h1 className="text-xl font-bold font-poppins">ApniClass</h1>
-      </Link>
+      <div className="flex items-center">
+        <HiBars3BottomLeft
+          className="text-2xl mr-5 cursor-pointer"
+          onClick={() => setShowSidebar(!showSidebar)}
+        />
+        <Link to="/">
+          <h1 className="text-xl font-bold font-poppins">ApniClass</h1>
+        </Link>
+      </div>
       <ul className="flex">
         {!User ? (
           <>

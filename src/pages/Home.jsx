@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import List from "../comonents/List";
-import Search from "../comonents/Search";
+import List from "../components/List";
+import Search from "../components/Search";
+import Sidebar from "../components/Sidebar";
 
-const Home = () => {
+const Home = ({ showSidebar }) => {
   const [selectedSubject, setSelectedSubject] = useState("");
   return (
-    <div>
-      <Search setSelectedSubject={setSelectedSubject} />
-      <List selectedSubject={selectedSubject} />
+    <div className="flex w-full">
+      <Sidebar showSidebar={showSidebar} />
+      <div className="flex-1">
+        <Search setSelectedSubject={setSelectedSubject} />
+        <List selectedSubject={selectedSubject} />
+      </div>
     </div>
   );
 };
