@@ -23,7 +23,7 @@ export const data = [
     subjects: {
       all: "All",
       engineering_environment: "Energy & Environmental Engineering",
-      discrete_structure: "Mathematics-I",
+      discrete_structure: "Discrete Structure",
       data_structure: "Data Structure",
       object_oriented_programming: "Object Oriented Programming",
       digital_system: "Digital Circuits & System",

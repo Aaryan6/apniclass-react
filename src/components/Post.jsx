@@ -5,6 +5,7 @@ import { BsDownload } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePost, likePost } from "../actions/post";
+import Avatar from "../assets/noavatar.png";
 
 const Post = ({ item }) => {
   const currentUser = useSelector((state) => state.currentUserReducer?.user);
@@ -40,7 +41,7 @@ const Post = ({ item }) => {
       <div className="flex justify-between items-end pb-2">
         <div className="flex items-center mt-3">
           <img
-            src={postUser[0]?.profileImage || ""}
+            src={postUser[0]?.profileImage ? postUser[0]?.profileImage : Avatar}
             alt=""
             className="w-5 h-5 mr-2 object-cover rounded-full"
           />

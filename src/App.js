@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllUsers } from "./actions/user";
 import { getAllPosts } from "./actions/post";
+import { getSubjects } from "./actions/subject";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function App() {
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());
+    dispatch(getSubjects());
   }, [dispatch]);
 
   return (
@@ -27,7 +29,10 @@ function App() {
         <BottmNavigation />
         <Routes>
           <Route exact path="/" element={<Home showSidebar={showSidebar} />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route
+            path="/profile/:id"
+            element={<Profile showSidebar={showSidebar} />}
+          />
           <Route path="/share" element={<AddPost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

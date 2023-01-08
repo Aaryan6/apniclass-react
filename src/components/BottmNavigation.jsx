@@ -7,11 +7,17 @@ import { useSelector } from "react-redux";
 const BottmNavigation = () => {
   const User = useSelector((state) => state.currentUserReducer?.user);
   const [page, setPage] = useState("home");
+  const path = window.location.pathname;
+
   const switchPage = (pg) => {
     setPage(pg);
   };
   return (
-    <div className="fixed bottom-0 w-full md:hidden z-20">
+    <div
+      className={`${
+        path === "/login" || path === "/signup" ? "hidden" : "block"
+      } fixed bottom-0 w-full md:hidden z-20`}
+    >
       <div className="bg-indigo-500 rounded-t-2xl flex items-center justify-evenly h-14 text-white">
         <Link to="/" className="">
           <AiFillHome

@@ -1,49 +1,67 @@
 import { useEffect, useState } from "react";
 import { AiOutlineSearch, AiFillCaretDown } from "react-icons/ai";
-import { data } from "../dummyData";
+import { useSelector } from "react-redux";
 
 const Search = ({ setSelectedSubject }) => {
-  const [showYear, setShowYear] = useState({
-    show: false,
+  const allSubjects = useSelector((state) => state.subjectReducer);
+  const [showOption, setShowOption] = useState({
+    optionYear: false,
+    optionBranch: false,
+    optionSubject: false,
+    optionStuff: false,
+  });
+  const [showYear] = useState({
     all: "All",
     first: "First Year",
     second: "Second Year",
   });
-  const [showSubjects, setShowSubjects] = useState({ show: false, all: "All" });
-  const [showBranch, setShowBranch] = useState({
-    show: false,
+  const [showSubjects, setShowSubjects] = useState({ all: "All" });
+  const [showBranch] = useState({
     IT: "IT",
     CS: "CS",
     EC: "EC",
-    mechanical: "Mechanical",
     civil: "Civil",
   });
-  const [showStuff, setShowStuff] = useState({
-    show: false,
+  const [showStuff] = useState({
     notes: "Notes",
     assignment: "Assignment",
     practical: "Practical",
+    shivani: "Shivani",
     other: "Other",
   });
-  const [year, setYear] = useState(Object.keys(showYear).slice(1)[0]);
-  const [branch, setBranch] = useState(Object.keys(showBranch).slice(1)[0]);
-  const [subject, setSubject] = useState(Object.keys(showSubjects).slice(1)[0]);
-  const [stuff, setStuff] = useState(Object.keys(showStuff).slice(1)[0]);
+  const [year, setYear] = useState(Object.keys(showYear)[0]);
+  const [branch, setBranch] = useState(Object.keys(showBranch)[0]);
+  const [subject, setSubject] = useState(Object.keys(showSubjects)[0]);
+  const [stuff, setStuff] = useState(Object.keys(showStuff)[0]);
   const [changeSubject, setChangeSubject] = useState(false);
 
   const handleDisplayOptions = (type) => {
-    setShowYear((prev) => ({ ...prev, show: false }));
-    setShowBranch((prev) => ({ ...prev, show: false }));
-    setShowSubjects((prev) => ({ ...prev, show: false }));
-    setShowStuff((prev) => ({ ...prev, show: false }));
+    setShowOption({
+      optionYear: false,
+      optionBranch: false,
+      optionSubject: false,
+      optionStuff: false,
+    });
     if (type === "year") {
-      setShowYear((prev) => ({ ...prev, show: !showYear.show }));
+      setShowOption((prev) => ({
+        ...prev,
+        optionYear: !showOption.optionYear,
+      }));
     } else if (type === "branch") {
-      setShowBranch((prev) => ({ ...prev, show: !showBranch.show }));
+      setShowOption((prev) => ({
+        ...prev,
+        optionBranch: !showOption.optionBranch,
+      }));
     } else if (type === "subjects") {
-      setShowSubjects((prev) => ({ ...prev, show: !showSubjects.show }));
+      setShowOption((prev) => ({
+        ...prev,
+        optionSubject: !showOption.optionSubject,
+      }));
     } else {
-      setShowStuff((prev) => ({ ...prev, show: !showStuff.show }));
+      setShowOption((prev) => ({
+        ...prev,
+        optionStuff: !showOption.optionStuff,
+      }));
     }
   };
 
@@ -56,10 +74,12 @@ const Search = ({ setSelectedSubject }) => {
     }
     if (type === "stuff") setStuff(option);
     // close option box
-    setShowYear((prev) => ({ ...prev, show: false }));
-    setShowBranch((prev) => ({ ...prev, show: false }));
-    setShowSubjects((prev) => ({ ...prev, show: false }));
-    setShowStuff((prev) => ({ ...prev, show: false }));
+    setShowOption({
+      optionYear: false,
+      optionBranch: false,
+      optionSubject: false,
+      optionStuff: false,
+    });
   };
 
   useEffect(() => {
@@ -67,22 +87,22 @@ const Search = ({ setSelectedSubject }) => {
   }, [year, branch]);
 
   useEffect(() => {
-    setSubject(Object.keys(showSubjects).slice(1)[0]);
-    setSelectedSubject(Object.keys(showSubjects).slice(1)[0]);
+    setSubject(Object.keys(showSubjects)[0]);
+    setSelectedSubject(Object.keys(showSubjects)[0]);
   }, [changeSubject]);
 
   useEffect(() => {
     if (year !== "all") {
       setShowSubjects(
-        data.filter(
+        allSubjects.data.filter(
           (grp) => grp.ofYear === year && grp.branches.includes(branch)
         )[0].subjects
       );
     } else {
-      setShowSubjects({ show: false, all: "All" });
+      setShowSubjects({ all: "All" });
     }
-    console.log(subject);
-  }, [year, branch]);
+    setShowSubjects((prev) => ({ all: "All", ...prev }));
+  }, [year, branch, allSubjects]);
 
   return (
     <div className="mx-5 mt-5 font-poppins">
@@ -111,22 +131,20 @@ const Search = ({ setSelectedSubject }) => {
           {/* options box */}
           <div
             className={`${
-              showYear.show ? "flex" : "hidden"
+              showOption.optionYear ? "flex" : "hidden"
             } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
           >
-            {Object.keys(showYear)
-              .slice(1)
-              .map((item, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleSelectOption(item, "year")}
-                    className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
-                  >
-                    {showYear[item]}
-                  </button>
-                );
-              })}
+            {Object.keys(showYear).map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleSelectOption(item, "year")}
+                  className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                >
+                  {showYear[item]}
+                </button>
+              );
+            })}
           </div>
           {/* end */}
         </div>
@@ -149,22 +167,20 @@ const Search = ({ setSelectedSubject }) => {
           {/* options box */}
           <div
             className={`${
-              showBranch.show ? "flex" : "hidden"
+              showOption.optionBranch ? "flex" : "hidden"
             } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
           >
-            {Object.keys(showBranch)
-              .slice(1)
-              .map((item, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleSelectOption(item, "branch")}
-                    className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
-                  >
-                    {showBranch[item]}
-                  </button>
-                );
-              })}
+            {Object.keys(showBranch).map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleSelectOption(item, "branch")}
+                  className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                >
+                  {showBranch[item]}
+                </button>
+              );
+            })}
           </div>
           {/* end */}
         </div>
@@ -188,7 +204,7 @@ const Search = ({ setSelectedSubject }) => {
           {/* options box */}
           <div
             className={`${
-              showSubjects.show ? "flex" : "hidden"
+              showOption.optionSubject ? "flex" : "hidden"
             } absolute z-20 flex-col max-h-72 overflow-scroll bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
           >
             {Object.keys(showSubjects).map((item, index) => {
@@ -220,22 +236,20 @@ const Search = ({ setSelectedSubject }) => {
           {/* options box */}
           <div
             className={`${
-              showStuff.show ? "flex" : "hidden"
+              showOption.optionStuff ? "flex" : "hidden"
             } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
           >
-            {Object.keys(showStuff)
-              .slice(1)
-              .map((item, index) => {
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleSelectOption(item, "stuff")}
-                    className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
-                  >
-                    {showStuff[item]}
-                  </button>
-                );
-              })}
+            {Object.keys(showStuff).map((item, index) => {
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleSelectOption(item, "stuff")}
+                  className="p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                >
+                  {showStuff[item]}
+                </button>
+              );
+            })}
           </div>
           {/* end */}
         </div>
