@@ -33,7 +33,7 @@ const List = ({ filters }) => {
       </div>
       <h6 className="text-sm text-center mt-4 text-slate-600 font-medium">
         {filteredPosts?.length === 0 && "File Not found ☹️"}
-        {!filteredPosts && "File Not found ☹️"}
+        {!filteredPosts && "Wait...😐"}
       </h6>
     </div>
   );
