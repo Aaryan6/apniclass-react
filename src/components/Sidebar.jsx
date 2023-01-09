@@ -19,8 +19,8 @@ const Sidebar = ({ showSidebar }) => {
   return (
     <div
       className={`bg-white ${
-        showSidebar ? "flex" : "hidden"
-      } md:w-64 md:sticky md:h-screen md:-mt-16 h-80 absolute border-2 w-48 z-20 top-0 pt-16 flex-col justify-between`}
+        showSidebar ? "hidden md:flex" : "md:hidden flex"
+      } md:w-64 md:sticky md:h-screen md:-mt-16 absolute border-2 w-48 z-20 top-0 pt-16 flex-col justify-between`}
     >
       <div className="grid w-full">
         <span

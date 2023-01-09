@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineSearch, AiFillCaretDown } from "react-icons/ai";
 import { useSelector } from "react-redux";
 
-const Search = ({ setSelectedSubject }) => {
+const Search = ({ setFilters }) => {
   const allSubjects = useSelector((state) => state.subjectReducer);
   const [showOption, setShowOption] = useState({
     optionYear: false,
@@ -17,18 +17,21 @@ const Search = ({ setSelectedSubject }) => {
   });
   const [showSubjects, setShowSubjects] = useState({ all: "All" });
   const [showBranch] = useState({
+    all: "All",
     IT: "IT",
     CS: "CS",
     EC: "EC",
     civil: "Civil",
   });
   const [showStuff] = useState({
+    all: "All",
     notes: "Notes",
     assignment: "Assignment",
     practical: "Practical",
     shivani: "Shivani",
     other: "Other",
   });
+  const [searchValue, setSearchValue] = useState("");
   const [year, setYear] = useState(Object.keys(showYear)[0]);
   const [branch, setBranch] = useState(Object.keys(showBranch)[0]);
   const [subject, setSubject] = useState(Object.keys(showSubjects)[0]);
@@ -66,13 +69,22 @@ const Search = ({ setSelectedSubject }) => {
   };
 
   const handleSelectOption = (option, type) => {
-    if (type === "year") setYear(option);
-    if (type === "branch") setBranch(option);
-    if (type === "subject") {
-      setSelectedSubject(option);
-      setSubject(option);
+    if (type === "year") {
+      setYear(option);
+      setFilters((prev) => ({ ...prev, year: option }));
     }
-    if (type === "stuff") setStuff(option);
+    if (type === "branch") {
+      setBranch(option);
+      setFilters((prev) => ({ ...prev, branch: option }));
+    }
+    if (type === "subject") {
+      setSubject(option);
+      setFilters((prev) => ({ ...prev, subject: option }));
+    }
+    if (type === "stuff") {
+      setStuff(option);
+      setFilters((prev) => ({ ...prev, stuff: option }));
+    }
     // close option box
     setShowOption({
       optionYear: false,
@@ -82,24 +94,38 @@ const Search = ({ setSelectedSubject }) => {
     });
   };
 
+  const handleSearchValue = (text) => {
+    setSearchValue(text);
+    setFilters((prev) => ({ ...prev, searchValue: text }));
+  };
+
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      year: Object.keys(showYear)[0],
+      branch: Object.keys(showBranch)[0],
+      stuff: Object.keys(showStuff)[0],
+    }));
+  }, []);
+
   useEffect(() => {
     setChangeSubject(!changeSubject);
   }, [year, branch]);
 
   useEffect(() => {
     setSubject(Object.keys(showSubjects)[0]);
-    setSelectedSubject(Object.keys(showSubjects)[0]);
+    setFilters((prev) => ({ ...prev, subject: Object.keys(showSubjects)[0] }));
   }, [changeSubject]);
 
   useEffect(() => {
-    if (year !== "all") {
+    if (year === "all" || branch === "all") {
+      setShowSubjects({ all: "All" });
+    } else {
       setShowSubjects(
         allSubjects.data.filter(
           (grp) => grp.ofYear === year && grp.branches.includes(branch)
         )[0].subjects
       );
-    } else {
-      setShowSubjects({ all: "All" });
     }
     setShowSubjects((prev) => ({ all: "All", ...prev }));
   }, [year, branch, allSubjects]);
@@ -111,6 +137,8 @@ const Search = ({ setSelectedSubject }) => {
           type="text"
           placeholder="Search here..."
           className=" pr-5 py-4 pl-10 outline-none w-full text-sm"
+          value={searchValue}
+          onChange={(e) => handleSearchValue(e.target.value)}
         />
         <AiOutlineSearch className="absolute left-3 top-4 text-indigo-500 text-xl" />
       </div>

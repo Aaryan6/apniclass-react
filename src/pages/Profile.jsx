@@ -16,23 +16,24 @@ import app from "../firebase-config";
 import { updateUser } from "../actions/user";
 import Post from "../components/Post";
 import Sidebar from "../components/Sidebar";
+import Avatar from "../assets/noavatar.png";
 
 const Profile = ({ showSidebar }) => {
   const userId = window.location.pathname.split("/")[2];
   const users = useSelector((state) => state.userReducer?.data);
   const [profileUser, setProfileUser] = useState({});
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [tab, setTab] = useState("uploads");
   const Posts = useSelector((state) => state.postReducer.data?.posts);
 
   useEffect(() => {
     setProfileUser(users.filter((user) => user._id === userId));
-  }, [users]);
-  const image =
-    "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80";
+  }, [userId, users]);
+
   return (
     <div className="flex w-full">
       <Sidebar showSidebar={showSidebar} />
-      <div className="pt-2 flex-1">
+      <div className="pt-2 flex-1 pb-20">
         <ModalBox
           modalIsOpen={modalIsOpen}
           setIsOpen={setIsOpen}
@@ -47,7 +48,7 @@ const Profile = ({ showSidebar }) => {
           </button>
           <div className=" flex flex-col items-center">
             <img
-              src={profileUser[0]?.profileImage || image}
+              src={profileUser[0]?.profileImage || Avatar}
               alt=""
               className="w-40 h-40 object-cover rounded-full"
             />
@@ -82,17 +83,37 @@ const Profile = ({ showSidebar }) => {
           </div>
         </div>
         <div className="bg-white m-1 py-2 rounded-md mx-auto max-w-lg">
-          <button className="text-sm mx-2 bg-slate-100 px-4 py-2 rounded-3xl cursor-pointer font-medium">
+          <button
+            onClick={() => setTab("uploads")}
+            className={`text-sm ml-2 px-4 py-2 ${
+              tab === "uploads" &&
+              "bg-slate-100 px-4 py-2 rounded-3xl cursor-pointer font-medium"
+            }`}
+          >
             My uploads
           </button>
-          <button className="text-sm mx-2">Liked</button>
+          <button
+            onClick={() => setTab("liked")}
+            className={`text-sm px-4 py-2 ${
+              tab === "liked" &&
+              "bg-slate-100 rounded-3xl cursor-pointer font-medium"
+            }`}
+          >
+            Liked
+          </button>
         </div>
         <div className="p-3 grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mx-auto max-w-6xl">
-          {Posts?.filter((pst) => pst.userId === profileUser[0]?._id).map(
-            (item) => {
-              return <Post item={item} key={item._id} />;
-            }
-          )}
+          {tab === "uploads"
+            ? Posts?.filter((pst) => pst.userId === profileUser[0]?._id).map(
+                (item) => {
+                  return <Post item={item} key={item._id} />;
+                }
+              )
+            : Posts?.filter((pst) =>
+                pst.likes.includes(profileUser[0]?._id)
+              ).map((item) => {
+                return <Post item={item} key={item._id} />;
+              })}
         </div>
       </div>
     </div>
