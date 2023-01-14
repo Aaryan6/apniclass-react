@@ -5,16 +5,20 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../actions/currentUser";
+import { getUserNotifications } from "../actions/notification";
 
 const Navbar = ({ setShowSidebar, showSidebar }) => {
   const User = useSelector((state) => state.currentUserReducer?.user);
+  const notifications = useSelector((state) => state.notificationReducer?.data);
   const dispatch = useDispatch();
   const path = window.location.pathname;
 
   useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("ac_user"))));
   }, []);
-
+  useEffect(() => {
+    User?._id && dispatch(getUserNotifications(User._id));
+  }, [User?._id]);
   return (
     <div
       className={`${
@@ -54,10 +58,14 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
             <Link to="/share" className="hidden md:flex">
               <AiOutlinePlus className="transition ease-in-out delay-150 duration-300 text-4xl p-1.5 mr-5 text-gray-600 bg-slate-200 rounded-full border-white" />
             </Link>
-            <Link to="/profile" className="relative mr-2">
-              <div className="absolute -top-2 -right-1.5 bg-red-500 text-white rounded-full grid place-items-center text-xs w-5 h-5">
-                <span className="mt-0.5">2</span>
-              </div>
+            <Link to="/notification" className="relative mr-2">
+              {notifications.notifications?.length > 0 && (
+                <div className="absolute -top-2 -right-1.5 bg-red-500 text-white rounded-full grid place-items-center text-xs w-5 h-5">
+                  <span className="mt-0.5">
+                    {notifications.notifications?.length}
+                  </span>
+                </div>
+              )}
               <IoNotificationsOutline className="text-2xl" />
             </Link>
           </div>

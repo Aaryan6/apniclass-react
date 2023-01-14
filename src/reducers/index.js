@@ -4,6 +4,7 @@ import currentUserReducer from "./currentUser";
 import postReducer from "./post";
 import userReducer from "./user";
 import subjectReducer from "./subject";
+import notificationReducer from "./notification";
 
 export default combineReducers({
   authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   postReducer,
   currentUserReducer,
   subjectReducer,
+  notificationReducer,
 });

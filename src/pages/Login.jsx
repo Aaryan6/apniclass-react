@@ -1,8 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../firebase-config";
-import bcrypt from "bcryptjs";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/auth";
 
@@ -13,38 +10,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {}, []);
-
-  // const postData = async (id, data) => {
-  //   if (id) {
-  //     const comparePass = await bcrypt.compare(
-  //       password.current.value,
-  //       data.password
-  //     );
-  //     if (comparePass) {
-  //       const { password, ...other } = data;
-  //       other["id"] = id;
-  //       localStorage.setItem("ac_user", JSON.stringify(other));
-  //       alert("Successfully logged in!");
-  //       console.log(other);
-  //     } else {
-  //       alert("password don't match");
-  //     }
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const q = query(
-  //     collection(db, "users"),
-  //     where("email", "==", email.current.value)
-  //   );
-  //   const querySnapshot = await getDocs(q);
-  //   if (querySnapshot.docs.length < 1) alert("User doesn't exists!");
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(doc.id, " => ", doc.data());
-  //     postData(doc.id, doc.data());
-  //   });
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();

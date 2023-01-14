@@ -68,7 +68,7 @@ const Profile = ({ showSidebar }) => {
             <div className="py-1 grid">
               <span className="text-slate-600">Branch: </span>
               <span className="font-medium">
-                {profileUser[0]?.presentBranch.toUpperCase()}
+                {profileUser[0]?.presentBranch?.toUpperCase()}
               </span>
             </div>
             <div className="text-right py-1 grid">

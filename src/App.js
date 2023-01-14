@@ -4,6 +4,7 @@ import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Notification from "./pages/Notification";
 import AddPost from "./pages/AddPost";
 import BottmNavigation from "./components/BottmNavigation";
 import Open from "./pages/Open";
@@ -21,7 +22,6 @@ function App() {
     dispatch(getAllPosts());
     dispatch(getSubjects());
   }, [dispatch]);
-
   return (
     <div className="App bg-zinc-100 min-h-screen w-full font-poppins">
       <Router>
@@ -37,6 +37,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/open-file" element={<Open />} />
+          <Route path="/notification" element={<Notification />} />
         </Routes>
       </Router>
     </div>
