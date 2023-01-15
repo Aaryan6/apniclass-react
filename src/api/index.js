@@ -4,7 +4,7 @@ import axios from "axios";
 // https://apniclass-mern-nodejs.onrender.com/api
 
 const API = axios.create({
-  baseURL: "https://apniclass-mern-nodejs.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 // authentication
@@ -26,6 +26,7 @@ export const deletePost = (postId) => API.delete(`/post/${postId}`);
 export const updateUser = (userId, userData) =>
   API.put(`/user/update/${userId}`, userData);
 export const getAllUsers = () => API.get("/user");
+export const getOneUser = (userId) => API.get(`/user/find/${userId}`);
 
 // subjects
 export const getSubjects = () => API.get("/subject");

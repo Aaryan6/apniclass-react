@@ -9,7 +9,7 @@ import Avatar from "../assets/noavatar.png";
 import { sendNotification } from "../actions/notification";
 
 const Post = ({ item }) => {
-  const currentUser = useSelector((state) => state.currentUserReducer?.user);
+  const currentUser = useSelector((state) => state.currentUserReducer);
   const users = useSelector((state) => state.userReducer.data);
   const [postUser, setPostUser] = useState({});
   const navigate = useNavigate();
@@ -58,18 +58,19 @@ const Post = ({ item }) => {
             {postUser[0]?.name}
           </Link>
         </div>
-        <div className="">
+        <div className="flex items-center mr-2">
           {item.likes.includes(currentUser?._id) ? (
             <AiFillLike
-              className="text-2xl text-indigo-400 mr-2 cursor-pointer"
+              className="text-2xl text-indigo-400 cursor-pointer"
               onClick={dislikeToPost}
             />
           ) : (
             <AiOutlineLike
-              className="text-2xl text-gray-600 mr-2 cursor-pointer"
+              className="text-2xl text-gray-600 cursor-pointer"
               onClick={likeToPost}
             />
           )}
+          <span className="ml-1">{item.likes?.length}</span>
         </div>
       </div>
       <footer className="flex items-center border-t">

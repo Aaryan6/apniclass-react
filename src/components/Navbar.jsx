@@ -9,7 +9,7 @@ import { setCurrentUser } from "../actions/currentUser";
 import { getUserNotifications } from "../actions/notification";
 
 const Navbar = ({ setShowSidebar, showSidebar }) => {
-  const User = useSelector((state) => state.currentUserReducer?.user);
+  const User = useSelector((state) => state.currentUserReducer);
   const notifications = useSelector((state) => state.notificationReducer?.data);
   const dispatch = useDispatch();
   const path = window.location.pathname;

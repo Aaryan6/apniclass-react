@@ -25,10 +25,11 @@ const Profile = ({ showSidebar }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState("uploads");
   const Posts = useSelector((state) => state.postReducer.data?.posts);
+  const User = useSelector((state) => state.currentUserReducer);
 
   useEffect(() => {
     setProfileUser(users.filter((user) => user._id === userId));
-  }, [userId, users]);
+  }, [userId, users, User]);
 
   return (
     <div className="flex w-full">
@@ -282,7 +283,7 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
           >
             {progress < 1
               ? "Choose Profile"
-              : "Uploading Profile " + progress + "%"}
+              : "Uploading Profile... " + progress + "%"}
             <GiClick className="ml-1" />
           </label>
           <input

@@ -6,7 +6,7 @@ import Avatar from "../assets/noavatar.png";
 
 const Sidebar = ({ showSidebar }) => {
   const navigate = useNavigate();
-  const User = useSelector((state) => state.currentUserReducer?.user);
+  const User = useSelector((state) => state.currentUserReducer);
 
   const handleLogoout = () => {
     localStorage.removeItem("ac_user");

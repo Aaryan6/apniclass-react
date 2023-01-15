@@ -13,7 +13,7 @@ import { addPost } from "../actions/post";
 
 const AddPost = () => {
   const dispatch = useDispatch();
-  const User = useSelector((state) => state.currentUserReducer?.user);
+  const User = useSelector((state) => state.currentUserReducer);
   const allSubjects = useSelector((state) => state.subjectReducer);
   const [fileData, setFileData] = useState();
   const [fileName, setFileName] = useState("");

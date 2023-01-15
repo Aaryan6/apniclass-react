@@ -6,7 +6,7 @@ import { AiOutlineCheck } from "react-icons/ai";
 import Sidebar from "../components/Sidebar";
 
 const Notification = ({ showSidebar }) => {
-  const currentUser = useSelector((state) => state.currentUserReducer?.user);
+  const currentUser = useSelector((state) => state.currentUserReducer);
   const notifications = useSelector((state) => state.notificationReducer?.data);
 
   return (

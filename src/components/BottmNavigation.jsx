@@ -6,19 +6,18 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const BottmNavigation = () => {
-  const User = useSelector((state) => state.currentUserReducer?.user);
+  const User = useSelector((state) => state.currentUserReducer);
   const [page, setPage] = useState("home");
   const path = window.location.pathname;
 
   const switchPage = (pg) => {
     setPage(pg);
   };
-  useEffect(() => {}, [path]);
 
   return (
     <div
       className={`${
-        path === "/login" || path === "/signup" ? "hidden" : "block"
+        path === "/login" || (path === "/signup" && !User) ? "hidden" : "block"
       } fixed bottom-0 w-full md:hidden z-20`}
     >
       <div className="bg-indigo-500 rounded-t-2xl flex items-center justify-evenly h-14 text-white">
@@ -36,7 +35,7 @@ const BottmNavigation = () => {
         <Link to={User ? `/profile/${User?._id}` : "/login"} className="">
           {User?.profileImage ? (
             <img
-              src={User?.profileImage}
+              src={User.profileImage}
               alt=""
               onClick={() => switchPage("profile")}
               className={`${
