@@ -17,6 +17,7 @@ import { getSubjects } from "./actions/subject";
 function App() {
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(true);
+  
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());

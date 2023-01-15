@@ -23,33 +23,35 @@ const Sidebar = ({ showSidebar }) => {
       } lg:w-64 lg:sticky lg:h-screen lg:-mt-16 absolute border-2 w-48 z-20 top-0 pt-16 flex-col justify-between`}
     >
       <div className="grid w-full">
-        <span
+        <button
           onClick={() => navigateTo("/")}
-          className="hover:bg-slate-100 py-4 px-4 text-sm cursor-pointer border-b"
+          className="hover:bg-slate-100 py-3 px-4 text-sm text-left cursor-pointer border-b"
         >
           Home
-        </span>
+        </button>
       </div>
-      <div className="grid">
-        <div
-          onClick={() => navigateTo("/profile/" + User?._id)}
-          className="hover:bg-slate-100 flex items-center py-3 px-4 text-sm cursor-pointer border-t"
-        >
-          <img
-            src={User?.profileImage ? User?.profileImage : Avatar}
-            alt=""
-            className={`w-7 h-7 object-cover rounded-full mr-3`}
-          />
-          <span>{User?.name}</span>
+      {User && (
+        <div className="grid">
+          <div
+            onClick={() => navigateTo("/profile/" + User?._id)}
+            className="hover:bg-slate-100 flex items-center py-3 px-4 text-sm cursor-pointer border-t"
+          >
+            <img
+              src={User?.profileImage ? User?.profileImage : Avatar}
+              alt=""
+              className={`w-7 h-7 object-cover rounded-full mr-3`}
+            />
+            <span>{User?.name}</span>
+          </div>
+          <div
+            className="hover:bg-slate-100 flex items-center justify-between py-3.5 px-4 text-sm cursor-pointer border-t"
+            onClick={handleLogoout}
+          >
+            <span>Logout</span>
+            <IoLogOutOutline className="text-xl" />
+          </div>
         </div>
-        <div
-          className="hover:bg-slate-100 flex items-center justify-between py-3.5 px-4 text-sm cursor-pointer border-t"
-          onClick={handleLogoout}
-        >
-          <span>Logout</span>
-          <IoLogOutOutline className="text-xl" />
-        </div>
-      </div>
+      )}
     </div>
   );
 };

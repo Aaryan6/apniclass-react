@@ -49,16 +49,18 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
             <span>Back</span>
           </button>
         ) : (
-          <HiBars3BottomLeft
-            className="text-2xl mr-5 cursor-pointer lg:inline-block"
-            onClick={() => setShowSidebar(!showSidebar)}
-          />
+          <>
+            <HiBars3BottomLeft
+              className="text-2xl mr-5 cursor-pointer lg:inline-block"
+              onClick={() => setShowSidebar(!showSidebar)}
+            />
+            <Link to="/" className="md:inline-block hidden">
+              <h1 className="text-xl font-poppins">
+                Apni<span className="font-bold">Class</span>
+              </h1>
+            </Link>
+          </>
         )}
-        <Link to="/" className="md:inline-block hidden">
-          <h1 className="text-xl font-poppins">
-            Apni<span className="font-bold">Class</span>
-          </h1>
-        </Link>
       </div>
       <Link to="/" className="md:hidden">
         <h1 className="text-xl font-poppins">

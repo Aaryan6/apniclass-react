@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PDF from "../assets/pdf.svg";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { BsDownload } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePost, likePost } from "../actions/post";
 import Avatar from "../assets/noavatar.png";
@@ -26,8 +26,12 @@ const Post = ({ item }) => {
   };
 
   const likeToPost = () => {
-    dispatch(likePost(item._id, currentUser?._id));
-    dispatch(sendNotification(currentUser?._id, item?._id, item?.userId));
+    if (currentUser) {
+      dispatch(likePost(item._id, currentUser?._id));
+      dispatch(sendNotification(currentUser?._id, item?._id, item?.userId));
+    } else {
+      alert("Please login!");
+    }
   };
   const dislikeToPost = () => {
     dispatch(dislikePost(item._id, currentUser?._id));
@@ -47,9 +51,12 @@ const Post = ({ item }) => {
             alt=""
             className="w-5 h-5 mr-2 object-cover rounded-full"
           />
-          <p className="text-sm text-gray-800 cursor-pointer hover:underline">
+          <Link
+            to={`/profile/${postUser[0]?._id}`}
+            className="text-sm text-gray-800 cursor-pointer hover:underline"
+          >
             {postUser[0]?.name}
-          </p>
+          </Link>
         </div>
         <div className="">
           {item.likes.includes(currentUser?._id) ? (
@@ -72,10 +79,12 @@ const Post = ({ item }) => {
         >
           Open
         </button>
-        <button className="text-xs py-3 w-full text-center cursor-pointer font-normal flex item-center justify-center">
-          Download
-          <BsDownload className="text-base ml-1" />
-        </button>
+        <a href={item.fileUrl} className="w-full text-center">
+          <button className="text-xs py-3 w-full text-center cursor-pointer font-normal flex item-center justify-center">
+            Download
+            <BsDownload className="text-base ml-1" />
+          </button>
+        </a>
       </footer>
     </div>
   );
