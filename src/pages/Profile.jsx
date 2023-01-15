@@ -25,11 +25,10 @@ const Profile = ({ showSidebar }) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [tab, setTab] = useState("uploads");
   const Posts = useSelector((state) => state.postReducer.data?.posts);
-  const User = useSelector((state) => state.currentUserReducer);
 
   useEffect(() => {
     setProfileUser(users.filter((user) => user._id === userId));
-  }, [userId, users, User]);
+  }, [userId, users]);
 
   return (
     <div className="flex w-full">
@@ -260,6 +259,9 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
 
   useEffect(() => {
     profile && uploadFile(profile);
+    if (profile) {
+      setFileUrl("");
+    }
   }, [profile]);
 
   return (
@@ -377,8 +379,10 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
           </div>
           <button
             type="submit"
-            className="text-sm bg-indigo-500 text-white py-3
-           rounded-sm"
+            className={`${
+              fileUrl === "" ? "bg-indigo-300" : "bg-indigo-500"
+            }  text-sm text-white py-3
+           rounded-sm`}
           >
             Update Profile
           </button>
