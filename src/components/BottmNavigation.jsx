@@ -12,7 +12,7 @@ const BottmNavigation = () => {
   const switchPage = (pg) => {
     setPage(pg);
   };
-  if (!User) {
+  if (User) {
     return (
       <div
         className={`${
