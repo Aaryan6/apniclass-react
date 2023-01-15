@@ -41,7 +41,7 @@ const Post = ({ item }) => {
     <div className="flex flex-col justify-between bg-white border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
       <div className="">
         <img src={PDF} alt="pdf" className="w-16" />
-        <p className="text-md mt-2">{item.fileName}</p>
+        <p className="text-md mt-2 break-all">{item.fileName}</p>
         <p className="text-xs text-gray-500 mt-1">{item.category}</p>
       </div>
       <div className="flex justify-between items-end pb-2">
