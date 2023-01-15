@@ -175,7 +175,6 @@ const AddPost = () => {
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
           setFileUrl(downloadURL);
           setFileData();
         });

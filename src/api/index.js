@@ -4,7 +4,7 @@ import axios from "axios";
 // https://apniclass-mern-nodejs.onrender.com/api
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://apniclass-mern-nodejs.onrender.com/api",
 });
 
 // authentication

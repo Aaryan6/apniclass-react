@@ -14,7 +14,6 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Password.current.value !== cpassword.current.value) {
-      console.log(Password.current.value, cpassword.current.value);
       cpassword.current.setCustomValidity("Password doesn't match!");
     } else {
       dispatch(
