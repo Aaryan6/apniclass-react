@@ -138,23 +138,24 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
     setIsOpen(false);
   }
 
-  const [showYear, setShowYear] = useState({
-    show: false,
+  const [showOption, setShowOption] = useState({
+    optionYear: false,
+    optionBranch: false,
+    optionSubject: false,
+    optionStuff: false,
+  });
+  const [showYear] = useState({
     first: "First Year",
     second: "Second Year",
-    third: "Third Year",
-    final: "Final Year",
   });
-  const [showBranch, setShowBranch] = useState({
-    show: false,
-    it: "IT",
-    cs: "CS",
-    ec: "EC",
-    mechanical: "Mechanical",
+  const [showBranch] = useState({
+    IT: "IT",
+    CS: "CS",
+    EC: "EC",
     civil: "Civil",
   });
-  const [year, setYear] = useState(currentUser?.presentYear);
-  const [branch, setBranch] = useState(Object.keys(showBranch).slice(1)[0]);
+  const [year, setYear] = useState(Object.keys(showYear)[0]);
+  const [branch, setBranch] = useState(Object.keys(showBranch)[0]);
   const [name, setName] = useState(currentUser?.name);
   const [profile, setImage] = useState(null);
   const [fileUrl, setFileUrl] = useState(currentUser?.profileImage);
@@ -162,20 +163,37 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
   const dispatch = useDispatch();
 
   const handleDisplayOptions = (type) => {
+    setShowOption({
+      optionYear: false,
+      optionBranch: false,
+      optionSubject: false,
+      optionStuff: false,
+    });
     if (type === "year") {
-      setShowYear((prev) => ({ ...prev, show: !showYear.show }));
-      setShowBranch((prev) => ({ ...prev, show: false }));
-    } else if (type === "branch") {
-      setShowYear((prev) => ({ ...prev, show: false }));
-      setShowBranch((prev) => ({ ...prev, show: !showBranch.show }));
+      setShowOption((prev) => ({
+        ...prev,
+        optionYear: !showOption.optionYear,
+      }));
+    } else {
+      setShowOption((prev) => ({
+        ...prev,
+        optionBranch: !showOption.optionBranch,
+      }));
     }
   };
+
   const handleSelectOption = (option, type) => {
-    if (type === "year") setYear(option);
-    if (type === "branch") setBranch(option);
+    if (type === "year") {
+      setYear(option);
+    }
+    if (type === "branch") {
+      setBranch(option);
+    }
     // close option box
-    setShowYear((prev) => ({ ...prev, show: false }));
-    setShowBranch((prev) => ({ ...prev, show: false }));
+    setShowOption({
+      optionYear: false,
+      optionBranch: false,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -234,8 +252,8 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
 
   useEffect(() => {
     setName(currentUser?.name);
-    setYear(currentUser?.presentYear);
-    setBranch(currentUser?.presentBranch);
+    currentUser?.presentYear && setYear(currentUser.presentYear);
+    currentUser?.presentBranch && setBranch(currentUser.presentBranch);
   }, [currentUser]);
 
   useEffect(() => {
@@ -304,22 +322,20 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
               {/* options box */}
               <div
                 className={`${
-                  showYear.show ? "flex" : "hidden"
+                  showOption.optionYear ? "flex" : "hidden"
                 } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
               >
-                {Object.keys(showYear)
-                  .slice(1)
-                  .map((item, index) => {
-                    return (
-                      <span
-                        key={index}
-                        onClick={() => handleSelectOption(item, "year")}
-                        className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
-                      >
-                        {showYear[item]}
-                      </span>
-                    );
-                  })}
+                {Object.keys(showYear).map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      onClick={() => handleSelectOption(item, "year")}
+                      className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    >
+                      {showYear[item]}
+                    </span>
+                  );
+                })}
               </div>
               {/* end */}
             </div>
@@ -340,22 +356,20 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
               {/* options box */}
               <div
                 className={`${
-                  showBranch.show ? "flex" : "hidden"
+                  showOption.optionBranch ? "flex" : "hidden"
                 } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
               >
-                {Object.keys(showBranch)
-                  .slice(1)
-                  .map((item, index) => {
-                    return (
-                      <span
-                        key={index}
-                        onClick={() => handleSelectOption(item, "branch")}
-                        className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
-                      >
-                        {showBranch[item]}
-                      </span>
-                    );
-                  })}
+                {Object.keys(showBranch).map((item, index) => {
+                  return (
+                    <span
+                      key={index}
+                      onClick={() => handleSelectOption(item, "branch")}
+                      className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    >
+                      {showBranch[item]}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -4,9 +4,7 @@ import axios from "axios";
 // https://apniclass-mern-nodejs.onrender.com/api
 
 const API = axios.create({
-  baseURL:
-    "http://localhost:5000/api" ||
-    "https://apniclass-mern-nodejs.onrender.com/api",
+  baseURL: "http://localhost:5000/api",
 });
 
 // authentication
@@ -37,3 +35,11 @@ export const getUserNotification = (userId) =>
   API.get(`/notification/${userId}`);
 export const readNotifications = (userId) =>
   API.put(`/notification/read/${userId}`);
+export const sendNotification = (likedUserId, postId, postUserId) =>
+  API.put(`/notification/send/${postUserId}`, {
+    likedUserId: likedUserId,
+    postId: postId,
+  });
+
+export const readOneNotification = (userId, objId) =>
+  API.put(`/notification/read-one/${userId}`, { objId: objId });

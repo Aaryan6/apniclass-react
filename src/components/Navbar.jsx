@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { AiOutlinePlus } from "react-icons/ai";
 import { HiBars3BottomLeft } from "react-icons/hi2";
+import { IoArrowBackOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../actions/currentUser";
 import { getUserNotifications } from "../actions/notification";
@@ -12,13 +13,25 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
   const notifications = useSelector((state) => state.notificationReducer?.data);
   const dispatch = useDispatch();
   const path = window.location.pathname;
+  const [notificationsList, setNotificationsList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("ac_user"))));
-  }, []);
+  }, [dispatch]);
+
+  // fetch notifications
   useEffect(() => {
     User?._id && dispatch(getUserNotifications(User._id));
-  }, [User?._id]);
+  }, [User?._id, dispatch]);
+
+  // store notification
+  useEffect(() => {
+    setNotificationsList(
+      notifications?.notifications?.filter((ntf) => ntf.seen === false)
+    );
+  }, [notifications, User?._id]);
+
   return (
     <div
       className={`${
@@ -27,10 +40,20 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
         `}
     >
       <div className="flex items-center">
-        <HiBars3BottomLeft
-          className="text-2xl mr-5 cursor-pointer lg:inline-block"
-          onClick={() => setShowSidebar(!showSidebar)}
-        />
+        {path === "/open-file" || path === "/share" ? (
+          <button
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            <IoArrowBackOutline className="text-xl mr-1" />
+            <span>Back</span>
+          </button>
+        ) : (
+          <HiBars3BottomLeft
+            className="text-2xl mr-5 cursor-pointer lg:inline-block"
+            onClick={() => setShowSidebar(!showSidebar)}
+          />
+        )}
         <Link to="/" className="md:inline-block hidden">
           <h1 className="text-xl font-poppins">
             Apni<span className="font-bold">Class</span>
@@ -45,12 +68,8 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
       <ul className="flex">
         {!User ? (
           <>
-            <Link to="/login">
-              <li className="mr-1">Login</li>
-            </Link>
-            {"|"}
             <Link to="signup">
-              <li className="ml-1">Sign Up</li>
+              <li className="ml-1 text-sm">Sign Up</li>
             </Link>
           </>
         ) : (
@@ -59,11 +78,9 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
               <AiOutlinePlus className="transition ease-in-out delay-150 duration-300 text-4xl p-1.5 mr-5 text-gray-600 bg-slate-200 rounded-full border-white" />
             </Link>
             <Link to="/notification" className="relative mr-2">
-              {notifications.notifications?.length > 0 && (
+              {notificationsList?.length > 0 && (
                 <div className="absolute -top-2 -right-1.5 bg-red-500 text-white rounded-full grid place-items-center text-xs w-5 h-5">
-                  <span className="mt-0.5">
-                    {notifications.notifications?.length}
-                  </span>
+                  <span className="mt-0.5">{notificationsList?.length}</span>
                 </div>
               )}
               <IoNotificationsOutline className="text-2xl" />

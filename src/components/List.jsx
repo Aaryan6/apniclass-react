@@ -31,9 +31,9 @@ const List = ({ filters }) => {
           return <Post item={item} key={item._id} />;
         })}
       </div>
-      <h6 className="text-sm text-center mt-4 text-slate-600 font-medium">
+      <h6 className="text-sm text-center mt-2 text-slate-600 font-medium">
         {filteredPosts?.length === 0 && "File Not found ☹️"}
-        {!filteredPosts && "Wait...😐"}
+        {!filteredPosts && "Wait... 😐"}
       </h6>
     </div>
   );

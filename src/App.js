@@ -37,7 +37,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/open-file" element={<Open />} />
-          <Route path="/notification" element={<Notification />} />
+          <Route
+            path="/notification"
+            element={<Notification showSidebar={showSidebar} />}
+          />
         </Routes>
       </Router>
     </div>

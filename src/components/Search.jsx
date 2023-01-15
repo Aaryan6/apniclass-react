@@ -29,6 +29,7 @@ const Search = ({ setFilters }) => {
     assignment: "Assignment",
     practical: "Practical",
     shivani: "Shivani",
+    papers: "Previous Papers",
     other: "Other",
   });
   const [searchValue, setSearchValue] = useState("");
@@ -131,7 +132,7 @@ const Search = ({ setFilters }) => {
   }, [year, branch, allSubjects]);
 
   return (
-    <div className="mx-5 mt-5 font-poppins">
+    <div className="mx-5 mt-3 font-poppins">
       <div className="flex relative border-x border-y border-solid border-slate-200 lg:max-w-6xl mx-auto">
         <input
           type="text"
@@ -142,7 +143,7 @@ const Search = ({ setFilters }) => {
         />
         <AiOutlineSearch className="absolute left-3 top-4 text-indigo-500 text-xl" />
       </div>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-3 py-4 sm:grid-cols-4 sm:max-w-2xl mx-auto">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-3 py-2 sm:grid-cols-4 sm:max-w-2xl mx-auto">
         {/* selection div */}
         <div className="flex flex-col items-center relative">
           <div
@@ -254,7 +255,7 @@ const Search = ({ setFilters }) => {
             onClick={() => handleDisplayOptions("stuff")}
             className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white  py-2 px-3 w-full"
           >
-            <span className="text-sm text-gray-700 mr-1">Stuff</span>
+            <span className="text-sm text-gray-700 mr-1">Category</span>
             <AiFillCaretDown className="text-sm text-gray-700" />
           </div>
           {/* option */}

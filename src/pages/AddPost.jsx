@@ -10,7 +10,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../actions/post";
-import { data } from "../dummyData";
 
 const AddPost = () => {
   const dispatch = useDispatch();
@@ -29,11 +28,10 @@ const AddPost = () => {
     optionStuff: false,
   });
   const [showYear] = useState({
-    all: "All",
     first: "First Year",
     second: "Second Year",
   });
-  const [showSubjects, setShowSubjects] = useState({ all: "All" });
+  const [showSubjects, setShowSubjects] = useState({});
   const [showBranch] = useState({
     IT: "IT",
     CS: "CS",
@@ -45,6 +43,7 @@ const AddPost = () => {
     assignment: "Assignment",
     practical: "Practical",
     shivani: "Shivani",
+    papers: "Previous Papers",
     other: "Other",
   });
   const [year, setYear] = useState(Object.keys(showYear)[0]);
@@ -105,17 +104,19 @@ const AddPost = () => {
 
   useEffect(() => {
     setSubject(Object.keys(showSubjects)[0]);
-  }, [changeSubject]);
+  }, [changeSubject, showSubjects]);
 
   useEffect(() => {
-    if (year !== "all") {
+    if (
+      allSubjects.data.filter(
+        (grp) => grp.ofYear === year && grp.branches.includes(branch)
+      ).length > 0
+    ) {
       setShowSubjects(
         allSubjects.data.filter(
           (grp) => grp.ofYear === year && grp.branches.includes(branch)
         )[0].subjects
       );
-    } else {
-      setShowSubjects({ all: "All" });
     }
   }, [year, branch, allSubjects]);
 
@@ -317,7 +318,7 @@ const AddPost = () => {
               onClick={() => handleDisplayOptions("stuff")}
               className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white md:py-2 py-1.5 px-3 w-full"
             >
-              <span className="text-sm text-gray-700 mr-1">Stuff</span>
+              <span className="text-sm text-gray-700 mr-1">Category</span>
               <AiFillCaretDown className="text-sm text-gray-700" />
             </div>
             {/* option */}
@@ -366,7 +367,9 @@ const AddPost = () => {
         </div>
         <button
           type="submit"
-          className="bg-indigo-500 text-white py-3 cursor-pointer text-sm"
+          className={`${
+            fileUrl !== "" ? "bg-indigo-500 cursor-pointer" : "bg-indigo-300"
+          } text-white py-3 text-sm`}
         >
           Share
         </button>

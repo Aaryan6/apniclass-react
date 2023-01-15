@@ -12,8 +12,26 @@ export const getUserNotifications = (userId) => async (dispatch) => {
 export const readNotifications = (userId) => async (dispatch) => {
   try {
     await api.readNotifications(userId);
-    dispatch(getUserNotifications());
   } catch (error) {
     console.log(error);
   }
 };
+
+export const readOneNotification = (userId, objId) => async (dispatch) => {
+  try {
+    await api.readOneNotification(userId, objId);
+    dispatch(getUserNotifications(userId));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const sendNotification =
+  (likedUserId, postId, postUserId) => async (dispatch) => {
+    try {
+      await api.sendNotification(likedUserId, postId, postUserId);
+      dispatch(getUserNotifications(likedUserId));
+    } catch (error) {
+      console.log(error);
+    }
+  };

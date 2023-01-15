@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dislikePost, likePost } from "../actions/post";
 import Avatar from "../assets/noavatar.png";
+import { sendNotification } from "../actions/notification";
 
 const Post = ({ item }) => {
   const currentUser = useSelector((state) => state.currentUserReducer?.user);
@@ -26,6 +27,7 @@ const Post = ({ item }) => {
 
   const likeToPost = () => {
     dispatch(likePost(item._id, currentUser?._id));
+    dispatch(sendNotification(currentUser?._id, item?._id, item?.userId));
   };
   const dislikeToPost = () => {
     dispatch(dislikePost(item._id, currentUser?._id));

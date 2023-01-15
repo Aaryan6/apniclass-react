@@ -19,8 +19,8 @@ const Sidebar = ({ showSidebar }) => {
   return (
     <div
       className={`bg-white ${
-        showSidebar ? "hidden md:flex" : "md:hidden flex"
-      } md:w-64 md:sticky md:h-screen md:-mt-16 absolute border-2 w-48 z-20 top-0 pt-16 flex-col justify-between`}
+        showSidebar ? "hidden lg:flex" : "lg:hidden flex"
+      } lg:w-64 lg:sticky lg:h-screen lg:-mt-16 absolute border-2 w-48 z-20 top-0 pt-16 flex-col justify-between`}
     >
       <div className="grid w-full">
         <span
@@ -28,12 +28,6 @@ const Sidebar = ({ showSidebar }) => {
           className="hover:bg-slate-100 py-4 px-4 text-sm cursor-pointer border-b"
         >
           Home
-        </span>
-        <span
-          onClick={() => navigateTo("/")}
-          className="hover:bg-slate-100 py-4 px-4 text-sm cursor-pointer "
-        >
-          Users
         </span>
       </div>
       <div className="grid">
