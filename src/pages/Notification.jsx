@@ -74,7 +74,7 @@ export const MessageBox = ({ notify, currentUser }) => {
         </span>
         <button
           onClick={() => readNotification(currentUser?._id, notify?._id)}
-          className="w-7 h-7 ml-2 border-2 border-green-300 grid place-items-center rounded-full"
+          className="w-7 h-7 ml-2 border-2 border-green-300 flex-shrink-0 grid place-items-center rounded-full"
         >
           <AiOutlineCheck className="text-green-400" />
         </button>
