@@ -65,7 +65,7 @@ const Profile = ({ showSidebar }) => {
             <div className="text-right py-1 grid">
               <span className="text-slate-600">Email: </span>
               <span className="font-medium break-all">
-                asaassfsddwdwdwddstersfsfssfscacscds{profileUser[0]?.email}
+                {profileUser[0]?.email}
               </span>
             </div>
             <div className="py-1 grid">
