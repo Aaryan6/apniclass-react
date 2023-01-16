@@ -16,7 +16,6 @@ const BottmNavigation = () => {
   const switchPage = (pg) => {
     setPage(pg);
   };
-
   useEffect(() => {
     if (path === "/login" || path === "/signup") {
       setShow(false);
