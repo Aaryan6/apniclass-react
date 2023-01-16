@@ -58,18 +58,21 @@ const Signup = () => {
 
   return (
     <div className="h-screen grid items-center justify-center">
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <div className="fixed top-0 right-0 p-0">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          className="absolute m-0 p-0"
+        />
+      </div>
       <div className="-mt-10">
         <h1 className="text-center text-2xl">
           Apni<span className="font-bold">Class</span>

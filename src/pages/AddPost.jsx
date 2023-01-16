@@ -199,18 +199,21 @@ const AddPost = () => {
 
   return (
     <div className="grid place-items-center pt-10 px-2">
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <div className="fixed top-0 right-0 p-0">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          className="absolute m-0 p-0"
+        />
+      </div>
       <form
         onSubmit={handleSubmit}
         className="bg-white p-5 grid w-full max-w-lg"
