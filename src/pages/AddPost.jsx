@@ -10,6 +10,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../actions/post";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddPost = () => {
   const dispatch = useDispatch();
@@ -123,7 +125,16 @@ const AddPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (fileUrl === "") {
-      alert("Upload file");
+      toast.warn("Upload file!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
       dispatch(
         addPost(
@@ -188,6 +199,18 @@ const AddPost = () => {
 
   return (
     <div className="grid place-items-center pt-10 px-2">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <form
         onSubmit={handleSubmit}
         className="bg-white p-5 grid w-full max-w-lg"

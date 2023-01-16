@@ -1,18 +1,31 @@
 import React, { useState } from "react";
 import { AiFillHome, AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const BottmNavigation = () => {
   const User = useSelector((state) => state.currentUserReducer);
   const [page, setPage] = useState("home");
   const path = window.location.pathname;
+  const [show, setShow] = useState(true);
+  const location = useLocation();
+  const url = location;
 
   const switchPage = (pg) => {
     setPage(pg);
   };
-  if (!User) {
+
+  useEffect(() => {
+    if (path === "/login" || path === "/signup") {
+      setShow(false);
+    } else {
+      setShow(true);
+    }
+  }, [path, url]);
+
+  if (show) {
     return (
       <div
         className={`${

@@ -18,7 +18,7 @@ import Post from "../components/Post";
 import Sidebar from "../components/Sidebar";
 import Avatar from "../assets/noavatar.png";
 
-const Profile = ({ showSidebar }) => {
+const Profile = ({ showSidebar, setShowSidebar }) => {
   const userId = window.location.pathname.split("/")[2];
   const users = useSelector((state) => state.userReducer?.data);
   const [profileUser, setProfileUser] = useState({});
@@ -32,7 +32,7 @@ const Profile = ({ showSidebar }) => {
 
   return (
     <div className="flex w-full">
-      <Sidebar showSidebar={showSidebar} />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className="pt-2 flex-1 pb-20">
         <ModalBox
           modalIsOpen={modalIsOpen}
@@ -55,25 +55,24 @@ const Profile = ({ showSidebar }) => {
             <span className="text-lg mt-2 font-medium">
               {profileUser[0]?.name}
             </span>
+            <span className="text-sm -mt-1 font-normal text-gray-600">
+              @{profileUser[0]?.username}
+            </span>
           </div>
-          <div className="grid grid-cols-2 justify-between text-sm px-4 pt-4">
-            <div className="py-1 grid">
+          <div className="grid grid-cols-3 text-sm px-4 pt-4">
+            <div className="text-center py-1 grid">
               <span className="text-slate-600">Year: </span>
-              <span className="font-medium">{profileUser[0]?.presentYear}</span>
-            </div>
-            <div className="text-right py-1 grid">
-              <span className="text-slate-600">Email: </span>
-              <span className="font-medium break-all">
-                {profileUser[0]?.email}
+              <span className="font-medium">
+                {profileUser[0]?.presentYear === "second" ? "2nd" : "1st"}
               </span>
             </div>
-            <div className="py-1 grid">
+            <div className="text-center py-1 grid">
               <span className="text-slate-600">Branch: </span>
               <span className="font-medium">
-                {profileUser[0]?.presentBranch?.toUpperCase()}
+                {profileUser[0]?.presentBranch}
               </span>
             </div>
-            <div className="text-right py-1 grid">
+            <div className="text-center py-1 grid">
               <span className="text-slate-600">Posts: </span>
               <span className="font-medium">
                 {
@@ -280,23 +279,30 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
           className="absolute right-4 top-4 cursor-pointer"
         />
         <form className="grid w-72 font-poppins" onSubmit={handleSubmit}>
-          <label
-            htmlFor="file"
-            className="bg-slate-200 flex items-center justify-center cursor-pointer py-2 mb-2 rounded-sm text-sm"
-          >
-            {progress < 1
-              ? "Choose Profile"
-              : "Uploading Profile... " + progress + "%"}
-            <GiClick className="ml-1" />
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => setImage(e.target.files[0])}
-            id="file"
-            className="hidden"
-          />
-          <label htmlFor="name" className="text-sm mb-1">
+          <div className="flex items-center">
+            <img
+              src={fileUrl || Avatar}
+              alt=""
+              className="w-20 h-20 rounded-full object-cover"
+            />
+            <label
+              htmlFor="file"
+              className="bg-slate-200 mx-auto px-4 flex items-center justify-center cursor-pointer py-2 mb-2 rounded-sm text-sm"
+            >
+              {progress < 1
+                ? "Choose Profile"
+                : "Uploading Profile... " + progress + "%"}
+              <GiClick className="ml-1" />
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files[0])}
+              id="file"
+              className="hidden"
+            />
+          </div>
+          <label htmlFor="name" className="text-sm mb-1 mt-2">
             Name
           </label>
           <input
@@ -307,7 +313,7 @@ export const ModalBox = ({ modalIsOpen, setIsOpen, currentUser }) => {
             onChange={(e) => setName(e.target.value)}
             className="border-2 border-slate-300 px-2 py-2 outline-none text-sm"
           />
-          <div className="w-full grid grid-cols-1 gap-x-4 gap-y-3 py-4">
+          <div className="w-full grid grid-cols-2 gap-x-4 gap-y-3 py-4">
             {/* selection div */}
             <div className="flex flex-col items-center relative">
               <div

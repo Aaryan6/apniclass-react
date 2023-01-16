@@ -17,7 +17,7 @@ import { getSubjects } from "./actions/subject";
 function App() {
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(true);
-  
+
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());
@@ -29,10 +29,21 @@ function App() {
         <Navbar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         <BottmNavigation />
         <Routes>
-          <Route exact path="/" element={<Home showSidebar={showSidebar} />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <Home showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
+            }
+          />
           <Route
             path="/profile/:id"
-            element={<Profile showSidebar={showSidebar} />}
+            element={
+              <Profile
+                showSidebar={showSidebar}
+                setShowSidebar={setShowSidebar}
+              />
+            }
           />
           <Route path="/share" element={<AddPost />} />
           <Route path="/login" element={<Login />} />
@@ -40,7 +51,12 @@ function App() {
           <Route path="/open-file" element={<Open />} />
           <Route
             path="/notification"
-            element={<Notification showSidebar={showSidebar} />}
+            element={
+              <Notification
+                showSidebar={showSidebar}
+                setShowSidebar={setShowSidebar}
+              />
+            }
           />
         </Routes>
       </Router>

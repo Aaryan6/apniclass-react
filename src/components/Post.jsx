@@ -14,6 +14,8 @@ const Post = ({ item }) => {
   const [postUser, setPostUser] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [like, setLike] = useState(item.likes.includes(currentUser?._id));
+  const [likesLength, setLikesLength] = useState(item.likes?.length);
 
   useEffect(() => {
     setPostUser(users.filter((u) => u._id === item.userId));
@@ -29,12 +31,16 @@ const Post = ({ item }) => {
     if (currentUser) {
       dispatch(likePost(item._id, currentUser?._id));
       dispatch(sendNotification(currentUser?._id, item?._id, item?.userId));
+      setLike(true);
+      setLikesLength((prev) => prev + 1);
     } else {
       alert("Please login!");
     }
   };
   const dislikeToPost = () => {
     dispatch(dislikePost(item._id, currentUser?._id));
+    setLike(false);
+    setLikesLength((prev) => prev - 1);
   };
 
   return (
@@ -59,7 +65,7 @@ const Post = ({ item }) => {
           </Link>
         </div>
         <div className="flex items-center mr-2">
-          {item.likes.includes(currentUser?._id) ? (
+          {like ? (
             <AiFillLike
               className="text-2xl text-indigo-400 cursor-pointer"
               onClick={dislikeToPost}
@@ -70,7 +76,7 @@ const Post = ({ item }) => {
               onClick={likeToPost}
             />
           )}
-          <span className="ml-1">{item.likes?.length}</span>
+          <span className="ml-1">{likesLength}</span>
         </div>
       </div>
       <footer className="flex items-center border-t">

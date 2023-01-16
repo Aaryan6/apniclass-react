@@ -4,17 +4,19 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Avatar from "../assets/noavatar.png";
 
-const Sidebar = ({ showSidebar }) => {
+const Sidebar = ({ showSidebar, setShowSidebar }) => {
   const navigate = useNavigate();
   const User = useSelector((state) => state.currentUserReducer);
 
   const handleLogoout = () => {
     localStorage.removeItem("ac_user");
+    setShowSidebar(!showSidebar);
     navigate("/login");
   };
 
   const navigateTo = (path) => {
     navigate(path);
+    setShowSidebar(!showSidebar);
   };
   return (
     <div

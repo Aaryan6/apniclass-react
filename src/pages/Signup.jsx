@@ -1,26 +1,53 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signup } from "../actions/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const name = useRef();
-  const email = useRef();
+  const username = useRef();
   const Password = useRef();
   const cpassword = useRef();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const message = useSelector((state) => state.authReducer?.data);
+
+  useEffect(() => {
+    if (message?.message) {
+      toast.warn(message.message, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [message]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Password.current.value !== cpassword.current.value) {
-      cpassword.current.setCustomValidity("Password doesn't match!");
+      toast.warn("Password doesn't match", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } else {
       dispatch(
         signup(
           {
             name: name.current.value,
-            email: email.current.value,
+            username: username.current.value,
             password: Password.current.value,
           },
           navigate
@@ -31,6 +58,18 @@ const Signup = () => {
 
   return (
     <div className="h-screen grid items-center justify-center">
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <div className="-mt-10">
         <h1 className="text-center text-2xl">
           Apni<span className="font-bold">Class</span>
@@ -50,14 +89,14 @@ const Signup = () => {
             required
             className="border-solid border-2 border-slate-100 text-sm px-3 py-3 outline-none w-full"
           />
-          <label htmlFor="email" className="mt-3 mb-2 text-sm">
-            Email
+          <label htmlFor="username" className="mt-3 mb-2 text-sm">
+            Username
           </label>
           <input
-            type="email"
-            placeholder="ex. john@example.com"
-            id="email"
-            ref={email}
+            type="text"
+            placeholder="ex. johndoe"
+            id="username"
+            ref={username}
             required
             className="border-solid border-2 border-slate-100 text-sm px-3 py-3 outline-none w-full"
           />

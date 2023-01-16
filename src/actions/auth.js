@@ -8,7 +8,7 @@ export const signup = (userData, navigate) => async (dispatch) => {
     dispatch({ type: "AUTH", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("ac_user"))));
     dispatch(getAllUsers());
-    navigate("/");
+    if (data._id) navigate("/");
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +20,7 @@ export const login = (userData, navigate) => async (dispatch) => {
     dispatch({ type: "AUTH", data });
     dispatch(setCurrentUser(JSON.parse(localStorage.getItem("ac_user"))));
     dispatch(getAllUsers());
-    navigate("/");
+    if (data._id) navigate("/");
   } catch (error) {
     console.log(error);
   }

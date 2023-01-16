@@ -5,13 +5,13 @@ import { readOneNotification } from "../actions/notification";
 import { AiOutlineCheck } from "react-icons/ai";
 import Sidebar from "../components/Sidebar";
 
-const Notification = ({ showSidebar }) => {
+const Notification = ({ showSidebar, setShowSidebar }) => {
   const currentUser = useSelector((state) => state.currentUserReducer);
   const notifications = useSelector((state) => state.notificationReducer?.data);
 
   return (
     <div className="flex w-full">
-      <Sidebar showSidebar={showSidebar} />
+      <Sidebar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
       <div className="max-w-3xl mx-auto py-2 flex-1">
         {notifications?.notifications
           ?.filter((ntf) => ntf.seen === false)
