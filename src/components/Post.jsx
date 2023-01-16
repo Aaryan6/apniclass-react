@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import PDF from "../assets/pdf.svg";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { AiOutlineLike, AiFillLike, AiOutlineDelete } from "react-icons/ai";
 import { BsDownload } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { dislikePost, likePost } from "../actions/post";
+import { deletePost, dislikePost, likePost } from "../actions/post";
 import Avatar from "../assets/noavatar.png";
 import { sendNotification } from "../actions/notification";
 
@@ -43,14 +43,27 @@ const Post = ({ item }) => {
     setLikesLength((prev) => prev - 1);
   };
 
+  const handleDelete = (postId) => {
+    dispatch(deletePost(postId));
+  };
+
   return (
-    <div className="flex flex-col justify-between bg-white border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
+    <div className="relative flex flex-col justify-between bg-white border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
       <div className="">
         <img src={PDF} alt="pdf" className="w-16" />
         <p className="text-md mt-2 break-all">{item.fileName}</p>
         <p className="text-xs text-gray-500 mt-1">{item.category}</p>
       </div>
       <div className="flex justify-between items-end pb-2">
+        {/* delete button */}
+        {currentUser?._id === item.userId && (
+          <button
+            onClick={() => handleDelete(item._id)}
+            className="absolute right-3 top-3 border-2 border-red-400 rounded-full p-1"
+          >
+            <AiOutlineDelete className="text-red-500" />
+          </button>
+        )}
         <div className="flex items-center mt-3">
           <img
             src={postUser[0]?.profileImage ? postUser[0]?.profileImage : Avatar}

@@ -36,3 +36,12 @@ export const dislikePost = (postId, userId) => async (dispatch) => {
     console.log(error);
   }
 };
+
+export const deletePost = (postId) => async (dispatch) => {
+  try {
+    await api.deletePost(postId);
+    dispatch(getAllPosts());
+  } catch (error) {
+    console.log(error);
+  }
+};
