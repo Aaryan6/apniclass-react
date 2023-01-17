@@ -30,11 +30,15 @@ const AddPost = () => {
     optionStuff: false,
   });
   const [showYear] = useState({
+    all: "All",
     first: "First Year",
     second: "Second Year",
+    third: "Third Year",
+    final: "Final Year",
   });
   const [showSubjects, setShowSubjects] = useState({});
   const [showBranch] = useState({
+    all: "All",
     IT: "IT",
     CS: "CS",
     EC: "EC",
@@ -108,18 +112,18 @@ const AddPost = () => {
     setSubject(Object.keys(showSubjects)[0]);
   }, [changeSubject, showSubjects]);
 
+  // fetch subject according to filters
   useEffect(() => {
-    if (
-      allSubjects.data.filter(
-        (grp) => grp.ofYear === year && grp.branches.includes(branch)
-      ).length > 0
-    ) {
+    if (year === "all" || branch === "all") {
+      setShowSubjects({ all: "All" });
+    } else {
       setShowSubjects(
         allSubjects.data.filter(
           (grp) => grp.ofYear === year && grp.branches.includes(branch)
         )[0].subjects
       );
     }
+    setShowSubjects((prev) => ({ all: "All", ...prev }));
   }, [year, branch, allSubjects]);
 
   const handleSubmit = async (e) => {

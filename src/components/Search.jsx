@@ -14,6 +14,8 @@ const Search = ({ setFilters }) => {
     all: "All",
     first: "First Year",
     second: "Second Year",
+    third: "Third Year",
+    final: "Final Year",
   });
   const [showSubjects, setShowSubjects] = useState({ all: "All" });
   const [showBranch] = useState({
@@ -39,6 +41,7 @@ const Search = ({ setFilters }) => {
   const [stuff, setStuff] = useState(Object.keys(showStuff)[0]);
   const [changeSubject, setChangeSubject] = useState(false);
 
+  // hide & show options menu
   const handleDisplayOptions = (type) => {
     setShowOption({
       optionYear: false,
@@ -69,6 +72,7 @@ const Search = ({ setFilters }) => {
     }
   };
 
+  // select selection option and hide & show options menu
   const handleSelectOption = (option, type) => {
     if (type === "year") {
       setYear(option);
@@ -100,6 +104,7 @@ const Search = ({ setFilters }) => {
     setFilters((prev) => ({ ...prev, searchValue: text }));
   };
 
+  // by default set value in filters
   useEffect(() => {
     setFilters((prev) => ({
       ...prev,
@@ -109,10 +114,12 @@ const Search = ({ setFilters }) => {
     }));
   }, []);
 
+  // refresh filters by changing year and branch
   useEffect(() => {
     setChangeSubject(!changeSubject);
   }, [year, branch]);
 
+  // set subject in option
   useEffect(() => {
     setSubject(Object.keys(showSubjects)[0]);
     setFilters((prev) => ({ ...prev, subject: Object.keys(showSubjects)[0] }));
