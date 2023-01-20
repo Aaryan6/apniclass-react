@@ -224,7 +224,7 @@ const AddPost = () => {
       >
         <h1 className="text-center text-lg font-medium">Share Post</h1>
         <label htmlFor="title" className="mb-2 mt-2 text-sm">
-          File Name:
+          Title:
         </label>
         <input
           type="text"
