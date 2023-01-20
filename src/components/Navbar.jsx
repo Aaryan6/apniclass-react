@@ -7,6 +7,9 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../actions/currentUser";
 import { getUserNotifications } from "../actions/notification";
+import { getAllUsers } from "../actions/user";
+import { getAllPosts } from "../actions/post";
+import { getSubjects } from "../actions/subject";
 
 const Navbar = ({ setShowSidebar, showSidebar }) => {
   const User = useSelector((state) => state.currentUserReducer);
@@ -31,6 +34,12 @@ const Navbar = ({ setShowSidebar, showSidebar }) => {
       notifications?.notifications?.filter((ntf) => ntf.seen === false)
     );
   }, [notifications, User?._id]);
+
+  useEffect(() => {
+    dispatch(getAllUsers());
+    dispatch(getAllPosts());
+    dispatch(getSubjects());
+  }, [dispatch]);
 
   return (
     <div

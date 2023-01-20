@@ -132,7 +132,7 @@ const Search = ({ setFilters }) => {
       setShowSubjects(
         allSubjects.data.filter(
           (grp) => grp.ofYear === year && grp.branches.includes(branch)
-        )[0].subjects
+        )[0]?.subjects
       );
     }
     setShowSubjects((prev) => ({ all: "All", ...prev }));
