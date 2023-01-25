@@ -17,7 +17,7 @@ const BottmNavigation = () => {
     setPage(pg);
   };
   useEffect(() => {
-    if (path === "/login" || path === "/signup") {
+    if (path === "/login" || path === "/signup" || path === "/open-file") {
       setShow(false);
     } else {
       setShow(true);
