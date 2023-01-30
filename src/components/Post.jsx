@@ -48,7 +48,7 @@ const Post = ({ item }) => {
   };
 
   return (
-    <div className="relative flex flex-col justify-between bg-white border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
+    <div className="relative flex flex-col justify-between shadow-sm bg-white p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
       <div className="">
         <img src={PDF} alt="pdf" className="w-16" />
         <p className="text-md mt-2 break-words">{item.fileName}</p>
