@@ -43,14 +43,14 @@ const Login = () => {
   return (
     <div className="h-screen grid items-center justify-center">
       <div className="-mt-10">
-        <h1 className="text-center text-2xl">
+        <h1 className="text-center text-2xl dark:text-white">
           Apni<span className="font-bold">Class</span>
         </h1>
         <form
           onSubmit={handleSubmit}
-          className="grid bg-white mt-4 p-5 w-80 max-w-md mx-auto  md:w-96"
+          className="grid bg-white dark:bg-slate-800 mt-4 p-5 w-80 max-w-md mx-auto  md:w-96"
         >
-          <label htmlFor="username" className="mt-3 mb-2 text-sm">
+          <label htmlFor="username" className="mt-3 mb-2 text-sm dark:text-slate-200">
             Username
           </label>
           <input
@@ -59,9 +59,9 @@ const Login = () => {
             id="username"
             ref={username}
             required
-            className="border-solid border-2 border-slate-100 text-sm px-3 py-3 outline-none w-full"
+            className="border-solid border-2 border-slate-100 dark:bg-slate-700 dark:border-slate-600 dark:text-white text-sm px-3 py-3 outline-none w-full"
           />
-          <label htmlFor="password" className="mt-3 mb-2 text-sm">
+          <label htmlFor="password" className="mt-3 mb-2 text-sm dark:text-slate-200">
             Password
           </label>
           <input
@@ -70,7 +70,7 @@ const Login = () => {
             id="password"
             ref={password}
             required
-            className="border-solid border-2 border-slate-100 text-sm px-3 py-3 outline-none w-full"
+            className="border-solid border-2 border-slate-100 dark:bg-slate-700 dark:border-slate-600 dark:text-white text-sm px-3 py-3 outline-none w-full"
           />
           <button
             type="submit"
@@ -79,10 +79,10 @@ const Login = () => {
             Login
           </button>
         </form>
-        <p className="text-center text-sm mt-2">
+        <p className="text-center text-sm mt-2 dark:text-slate-200">
           Don't have an account?
           <Link to="/signup">
-            <span className="text-blue-700 underline ml-1">Sing Up</span>
+            <span className="text-blue-700 underline ml-1 dark:text-blue-400">Sing Up</span>
           </Link>
         </p>
       </div>
