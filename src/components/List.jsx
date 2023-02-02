@@ -43,6 +43,7 @@ const List = ({ filters }) => {
           <SkeletonPost />
           <SkeletonPost />
           <SkeletonPost />
+          <SkeletonPost />
         </div>
       )}
       <h6 className="text-sm text-center mt-2 text-slate-600 font-medium">
@@ -56,7 +57,7 @@ export default List;
 
 export const SkeletonPost = () => {
   return (
-    <div className="relative flex flex-col justify-between bg-white border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
+    <div className="relative flex flex-col justify-between bg-white dark:bg-slate-600 dark:border-slate-600 border-2 border-solid border-slate-100 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
       <div className="">
         <div
           src=""
