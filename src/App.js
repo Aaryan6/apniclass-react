@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { getAllUsers } from "./actions/user";
 import { getAllPosts } from "./actions/post";
 import { getSubjects } from "./actions/subject";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,19 @@ function App() {
   return (
     <div className="App bg-bg-light dark:bg-slate-900 min-h-screen w-full font-poppins">
       <Router>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          className="absolute m-0 p-0"
+        />
         <Navbar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         <BottmNavigation />
         <Routes>
