@@ -23,8 +23,9 @@ function App() {
     dispatch(getAllPosts());
     dispatch(getSubjects());
   }, [dispatch]);
+
   return (
-    <div className="App bg-zinc-100 min-h-screen w-full font-poppins">
+    <div className="App bg-bg-light dark:bg-slate-900 min-h-screen w-full font-poppins">
       <Router>
         <Navbar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         <BottmNavigation />
@@ -48,7 +49,7 @@ function App() {
           <Route path="/share" element={<AddPost />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/open-file" element={<Open />} />
+          <Route path="/open/:id" element={<Open />} />
           <Route
             path="/notification"
             element={

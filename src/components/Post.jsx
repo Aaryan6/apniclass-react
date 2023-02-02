@@ -22,9 +22,7 @@ const Post = ({ item }) => {
   }, [currentUser, users, item]);
 
   const openFile = (url) => {
-    navigate("/open-file", {
-      state: { url },
-    });
+    navigate(`/open/${url.split("/")[7]}`);
   };
 
   const likeToPost = () => {
@@ -48,20 +46,24 @@ const Post = ({ item }) => {
   };
 
   return (
-    <div className="relative flex flex-col justify-between shadow-sm bg-white p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
+    <div className="relative flex flex-col justify-between shadow-sm bg-white dark:bg-slate-700 p-3 pb-0 rounded-sm max-w-sm w-full mx-auto">
       <div className="">
         <img src={PDF} alt="pdf" className="w-16" />
-        <p className="text-md mt-2 break-words">{item.fileName}</p>
-        <p className="text-xs text-gray-500 mt-1">{item.category}</p>
+        <p className="text-md mt-2 break-words dark:text-white">
+          {item.fileName}
+        </p>
+        <p className="text-xs text-gray-500 mt-1 dark:text-slate-300">
+          {item.category}
+        </p>
       </div>
       <div className="flex justify-between items-end pb-2">
         {/* delete button */}
         {currentUser?._id === item.userId && (
           <button
             onClick={() => handleDelete(item._id)}
-            className="absolute right-3 top-3 border-2 border-red-400 rounded-full p-1"
+            className="absolute right-3 top-3 border-2 border-red-400 dark:border-red2700 rounded-full p-1"
           >
-            <AiOutlineDelete className="text-red-500" />
+            <AiOutlineDelete className="text-red-500 dark:text-red-300" />
           </button>
         )}
         <div className="flex items-center mt-3">
@@ -72,7 +74,7 @@ const Post = ({ item }) => {
           />
           <Link
             to={`/profile/${postUser[0]?._id}`}
-            className="text-sm text-gray-800 cursor-pointer hover:underline"
+            className="text-sm text-gray-800 dark:text-slate-100 cursor-pointer hover:underline"
           >
             {postUser[0]?.name}
           </Link>
@@ -80,27 +82,27 @@ const Post = ({ item }) => {
         <div className="flex items-center mr-2">
           {like ? (
             <AiFillLike
-              className="text-2xl text-indigo-400 cursor-pointer"
+              className="text-2xl text-indigo-400 dark:text-indigo-300 cursor-pointer"
               onClick={dislikeToPost}
             />
           ) : (
             <AiOutlineLike
-              className="text-2xl text-gray-600 cursor-pointer"
+              className="text-2xl text-gray-600 dark:text-slate-400 cursor-pointer"
               onClick={likeToPost}
             />
           )}
-          <span className="ml-1">{likesLength}</span>
+          <span className="ml-1 dark:text-slate-100">{likesLength}</span>
         </div>
       </div>
       <footer className="flex items-center border-t">
         <button
           onClick={() => openFile(item.fileUrl)}
-          className="text-xs py-3 w-full text-center cursor-pointer font-normal border-r"
+          className="dark:text-slate-50 text-xs py-3 w-full text-center cursor-pointer font-normal border-r"
         >
           Open
         </button>
         <a href={item.fileUrl} className="w-full text-center">
-          <button className="text-xs py-3 w-full text-center cursor-pointer font-normal flex item-center justify-center">
+          <button className="dark:text-slate-50 text-xs py-3 w-full text-center cursor-pointer font-normal flex item-center justify-center">
             Download
             <BsDownload className="text-base ml-1" />
           </button>

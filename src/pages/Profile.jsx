@@ -39,10 +39,10 @@ const Profile = ({ showSidebar, setShowSidebar }) => {
           setIsOpen={setIsOpen}
           currentUser={profileUser[0]}
         />
-        <div className="p-4 bg-white max-w-lg mx-auto relative">
+        <div className="p-4 bg-white dark:bg-slate-700 max-w-lg mx-auto relative">
           <button
             onClick={() => setIsOpen(true)}
-            className="absolute right-2 text-xs bg-slate-100 py-2 px-3 rounded-sm cursor-pointer"
+            className="absolute right-2 text-xs bg-slate-100 dark:bg-slate-500 dark:text-white py-2 px-3 rounded-sm cursor-pointer"
           >
             Edit Profile
           </button>
@@ -52,29 +52,29 @@ const Profile = ({ showSidebar, setShowSidebar }) => {
               alt=""
               className="w-40 h-40 object-cover rounded-full"
             />
-            <span className="text-lg mt-2 font-medium">
+            <span className="text-lg mt-2 font-medium dark:text-white">
               {profileUser[0]?.name}
             </span>
-            <span className="text-sm -mt-1 font-normal text-gray-600">
+            <span className="dark:text-white text-sm -mt-1 font-normal text-gray-600">
               @{profileUser[0]?.username}
             </span>
           </div>
           <div className="grid grid-cols-3 text-sm px-4 pt-4">
             <div className="text-center py-1 grid">
-              <span className="text-slate-600">Year: </span>
-              <span className="font-medium">
+              <span className="text-slate-600 dark:text-white">Year: </span>
+              <span className="font-medium dark:text-white">
                 {profileUser[0]?.presentYear === "second" ? "2nd" : "1st"}
               </span>
             </div>
             <div className="text-center py-1 grid">
-              <span className="text-slate-600">Branch: </span>
-              <span className="font-medium">
+              <span className="text-slate-600 dark:text-white">Branch: </span>
+              <span className="font-medium dark:text-white">
                 {profileUser[0]?.presentBranch}
               </span>
             </div>
             <div className="text-center py-1 grid">
-              <span className="text-slate-600">Posts: </span>
-              <span className="font-medium">
+              <span className="text-slate-600 dark:text-white">Posts: </span>
+              <span className="font-medium dark:text-white">
                 {
                   Posts?.filter((pst) => pst.userId === profileUser[0]?._id)
                     .length
@@ -83,21 +83,21 @@ const Profile = ({ showSidebar, setShowSidebar }) => {
             </div>
           </div>
         </div>
-        <div className="bg-white m-1 py-2 rounded-md mx-auto max-w-lg">
+        <div className="bg-white dark:bg-slate-700 m-1 py-2 rounded-md mx-auto max-w-lg">
           <button
             onClick={() => setTab("uploads")}
-            className={`text-sm ml-2 px-4 py-2 ${
+            className={`text-sm ml-2 px-4 py-2 dark:text-white ${
               tab === "uploads" &&
-              "bg-slate-100 px-4 py-2 rounded-3xl cursor-pointer font-medium"
+              "bg-slate-100 dark:bg-slate-600 px-4 py-2 rounded-3xl cursor-pointer font-medium"
             }`}
           >
             My uploads
           </button>
           <button
             onClick={() => setTab("liked")}
-            className={`text-sm px-4 py-2 ${
+            className={`text-sm px-4 py-2 dark:text-white ${
               tab === "liked" &&
-              "bg-slate-100 rounded-3xl cursor-pointer font-medium"
+              "bg-slate-100 dark:bg-slate-600 rounded-3xl cursor-pointer font-medium"
             }`}
           >
             Liked

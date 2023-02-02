@@ -220,10 +220,12 @@ const AddPost = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-5 grid w-full max-w-lg"
+        className="bg-white dark:bg-slate-700 p-5 grid w-full max-w-lg"
       >
-        <h1 className="text-center text-lg font-medium">Share Post</h1>
-        <label htmlFor="title" className="mb-2 mt-2 text-sm">
+        <h1 className="text-center text-lg font-medium dark:text-white">
+          Share Post
+        </h1>
+        <label htmlFor="title" className="mb-2 mt-2 text-sm dark:text-white">
           Title:
         </label>
         <input
@@ -232,7 +234,7 @@ const AddPost = () => {
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
           required
-          className="border-2 outline-none px-2 py-2.5 text-sm"
+          className="border-2 dark:border-slate-600 dark:bg-slate-800 dark:text-white outline-none px-2 py-2.5 text-sm"
         />
 
         <div className="w-full grid grid-cols-2 gap-x-4 gap-y-3 py-4 sm:grid-cols-4 sm:max-w-2xl mx-auto">
@@ -240,30 +242,37 @@ const AddPost = () => {
           <div className="flex flex-col items-center relative">
             <div
               onClick={() => handleDisplayOptions("year")}
-              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white md:py-2 py-1.5 px-3 w-full"
+              name="yearbtn"
+              className=" flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white dark:bg-slate-700 dark:border-slate-600 py-2 px-3 w-full"
             >
-              <span className="text-sm text-gray-700 mr-1">Year</span>
-              <AiFillCaretDown className="text-sm text-gray-700" />
+              <span className="text-sm text-gray-700 dark:text-slate-100 mr-1">
+                Year
+              </span>
+              <AiFillCaretDown className="optionButton text-sm text-gray-700 dark:text-slate-100" />
             </div>
+
             {/* option */}
-            <div className="mt-2 bg-indigo-50 border-2 border-solid border-indigo-200 md:h-9 h-8 flex items-center justify-center rounded-sm w-full">
-              <span className="text-indigo-600 text-sm">{showYear[year]}</span>
+            <div className="mt-2 bg-indigo-50 dark:bg-indigo-300 border-2 border-solid border-indigo-200 h-9 flex items-center justify-center rounded-sm w-full">
+              <span className="text-indigo-600 dark:text-indigo-700 text-sm">
+                {showYear[year]}
+              </span>
             </div>
             {/* options box */}
             <div
               className={`${
                 showOption.optionYear ? "flex" : "hidden"
-              } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
+              } absolute z-20 flex-col bg-white dark:bg-slate-700 dark:border-slate-600 shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
             >
               {Object.keys(showYear).map((item, index) => {
                 return (
-                  <span
+                  <button
+                    aria-labelledby="dropdownMenuButton1"
                     key={index}
                     onClick={() => handleSelectOption(item, "year")}
-                    className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    className="p-3 text-sm border-b dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-600 dark:text-slate-50 text-left w-full"
                   >
                     {showYear[item]}
-                  </span>
+                  </button>
                 );
               })}
             </div>
@@ -274,14 +283,16 @@ const AddPost = () => {
           <div className="relative flex flex-col items-center">
             <div
               onClick={() => handleDisplayOptions("branch")}
-              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white md:py-2 py-1.5 px-3 w-full"
+              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white dark:bg-slate-700 dark:border-slate-600 py-2 px-3 w-full"
             >
-              <span className="text-sm text-gray-700 mr-1">Branch</span>
-              <AiFillCaretDown className="text-sm text-gray-700" />
+              <span className="text-sm text-gray-700 mr-1 dark:text-slate-100">
+                Branch
+              </span>
+              <AiFillCaretDown className="text-sm text-gray-700 dark:text-slate-100" />
             </div>
             {/* option */}
-            <div className="mt-2 bg-indigo-50 border-2 border-solid border-indigo-200 md:h-9 h-8 flex items-center justify-center rounded-sm w-full">
-              <span className="text-indigo-600 text-sm">
+            <div className="mt-2 bg-indigo-50 dark:bg-indigo-300 border-2 border-solid border-indigo-200 h-9 flex items-center justify-center rounded-sm w-full">
+              <span className="text-indigo-600 dark:text-indigo-700 text-sm">
                 {showBranch[branch]}
               </span>
             </div>
@@ -289,34 +300,36 @@ const AddPost = () => {
             <div
               className={`${
                 showOption.optionBranch ? "flex" : "hidden"
-              } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
+              } absolute z-20 flex-col bg-white dark:bg-slate-700 dark:border-slate-600 shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
             >
               {Object.keys(showBranch).map((item, index) => {
                 return (
-                  <span
+                  <button
                     key={index}
                     onClick={() => handleSelectOption(item, "branch")}
-                    className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    className="p-3 text-sm border-b dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-600 dark:text-slate-50 text-left w-full"
                   >
                     {showBranch[item]}
-                  </span>
+                  </button>
                 );
               })}
             </div>
             {/* end */}
           </div>
-          {/* subject */}
+
           <div className="relative flex flex-col items-center">
             <div
               onClick={() => handleDisplayOptions("subjects")}
-              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white md:py-2 py-1.5 px-3 w-full"
+              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white dark:bg-slate-700 dark:border-slate-600 py-2 px-3 w-full"
             >
-              <span className="text-sm text-gray-700 mr-1">Subject</span>
-              <AiFillCaretDown className="text-sm text-gray-700" />
+              <span className="text-sm text-gray-700 mr-1 dark:text-slate-100">
+                Subject
+              </span>
+              <AiFillCaretDown className="text-sm text-gray-700 dark:text-slate-100" />
             </div>
             {/* option */}
-            <div className="mt-2 bg-indigo-50 border-2 border-solid border-indigo-200 h-9 flex items-center justify-center rounded-sm w-full">
-              <span className="text-indigo-600 text-sm text-left whitespace-pre">
+            <div className="mt-2 bg-indigo-50 dark:bg-indigo-300 border-2 border-solid border-indigo-200 h-9 flex items-center justify-center rounded-sm w-full">
+              <span className="text-indigo-600 dark:text-indigo-700 text-sm text-left whitespace-pre">
                 {showSubjects[subject]?.length > 13
                   ? showSubjects[subject].substring(0, 13) + "..."
                   : showSubjects[subject]}
@@ -326,33 +339,34 @@ const AddPost = () => {
             <div
               className={`${
                 showOption.optionSubject ? "flex" : "hidden"
-              } absolute z-20 flex-col max-h-72 overflow-scroll bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
+              } absolute z-20 flex-col max-h-72 overflow-scroll bg-white dark:bg-slate-700 dark:border-slate-600 shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
             >
               {Object.keys(showSubjects).map((item, index) => {
                 return (
-                  <span
+                  <button
                     key={index}
                     onClick={() => handleSelectOption(item, "subject")}
-                    className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    className="p-3 text-sm border-b dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-600 dark:text-slate-50 text-left w-full"
                   >
                     {showSubjects[item]}
-                  </span>
+                  </button>
                 );
               })}
             </div>
-            {/* end */}
           </div>
           <div className="relative flex flex-col items-center">
             <div
               onClick={() => handleDisplayOptions("stuff")}
-              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white md:py-2 py-1.5 px-3 w-full"
+              className="flex justify-center items-center cursor-pointer border-2 border-solid border-gray-100 bg-white dark:bg-slate-700 dark:border-slate-600 py-2 px-3 w-full"
             >
-              <span className="text-sm text-gray-700 mr-1">Category</span>
-              <AiFillCaretDown className="text-sm text-gray-700" />
+              <span className="text-sm text-gray-700 mr-1 dark:text-slate-100">
+                Category
+              </span>
+              <AiFillCaretDown className="text-sm text-gray-700 dark:text-slate-100" />
             </div>
             {/* option */}
-            <div className="mt-2 bg-indigo-50 border-2 border-solid border-indigo-200 md:h-9 h-8 flex items-center justify-center rounded-sm w-full">
-              <span className="text-indigo-600 text-sm">
+            <div className="mt-2 bg-indigo-50 dark:bg-indigo-300 border-2 border-solid border-indigo-200 h-9 flex items-center justify-center rounded-sm w-full">
+              <span className="text-indigo-600 dark:text-indigo-700 text-sm">
                 {showStuff[stuff]}
               </span>
             </div>
@@ -360,17 +374,17 @@ const AddPost = () => {
             <div
               className={`${
                 showOption.optionStuff ? "flex" : "hidden"
-              } absolute z-20 flex-col bg-white shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
+              } absolute z-20 flex-col bg-white dark:bg-slate-700 dark:border-slate-600 shadow-lg drop-shadow-xs border-solid border-2 border-zinc-100 w-full top-10`}
             >
               {Object.keys(showStuff).map((item, index) => {
                 return (
-                  <span
+                  <button
                     key={index}
                     onClick={() => handleSelectOption(item, "stuff")}
-                    className="cursor-pointer p-3 text-sm border-b hover:bg-slate-100 text-left w-full"
+                    className="p-3 text-sm border-b dark:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-600 dark:text-slate-50 text-left w-full"
                   >
                     {showStuff[item]}
-                  </span>
+                  </button>
                 );
               })}
             </div>
@@ -381,7 +395,7 @@ const AddPost = () => {
         <div className="mb-5 mt-2 flex">
           <label
             htmlFor="file"
-            className="cursor-pointer bg-slate-200 py-3 w-full text-center font-medium text-gray-500 text-sm flex justify-center items-center"
+            className="cursor-pointer bg-slate-200 dark:bg-slate-500 py-3 w-full text-center font-medium text-gray-500 dark:text-white text-sm flex justify-center items-center"
           >
             {progress === 0 ? "Upload File" : `Uploading File ${progress}%`}
             <AiOutlineCloudUpload className="ml-2 text-xl" />
@@ -397,7 +411,7 @@ const AddPost = () => {
         <button
           type="submit"
           className={`${
-            fileUrl !== "" ? "bg-indigo-500 cursor-pointer" : "bg-indigo-300"
+            fileUrl !== "" ? "bg-indigo-500 cursor-pointer" : "bg-indigo-400"
           } text-white py-3 text-sm`}
         >
           Share

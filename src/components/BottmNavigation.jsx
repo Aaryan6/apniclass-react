@@ -17,7 +17,11 @@ const BottmNavigation = () => {
     setPage(pg);
   };
   useEffect(() => {
-    if (path === "/login" || path === "/signup" || path === "/open-file") {
+    if (
+      path === "/login" ||
+      path === "/signup" ||
+      path.split("/")[1] === "open"
+    ) {
       setShow(false);
     } else {
       setShow(true);
@@ -43,7 +47,7 @@ const BottmNavigation = () => {
             />
           </Link>
           <Link to={User ? "/share" : "/login"}>
-            <AiOutlinePlus className="hover:bg-indigo-600 transition ease-in-out delay-150 duration-300 text-6xl text-white bg-indigo-500 rounded-full p-3 -mt-14 border-4 border-white" />
+            <AiOutlinePlus className="hover:scale-110 transition ease-in-out delay-150 duration-300 text-6xl text-white bg-indigo-500 rounded-full p-3 -mt-14 border-4 border-white dark:border-slate-700" />
           </Link>
           <Link to={User ? `/profile/${User?._id}` : "/login"} className="">
             {User?.profileImage ? (
