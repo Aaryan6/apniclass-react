@@ -26,7 +26,9 @@ const Notification = ({ showSidebar, setShowSidebar }) => {
           })}
         {notifications?.notifications?.filter((ntf) => ntf.seen === false)
           .length === 0 && (
-          <p className="text-center text-sm mt-4">No notifications! 🔕</p>
+          <p className="text-center text-sm mt-4 dark:text-white">
+            No notifications! 🔕
+          </p>
         )}
       </div>
     </div>
@@ -53,10 +55,6 @@ export const MessageBox = ({ notify, currentUser }) => {
       )[0]
     );
   }, [notify, reducers]);
-
-  // useEffect(() => {
-  //   dispatch(readNotifications(currentUser?._id)); //  read all the notifications
-  // }, [dispatch]);
 
   const readNotification = (userId, objId) => {
     dispatch(readOneNotification(userId, objId)); //  read one the notifications
