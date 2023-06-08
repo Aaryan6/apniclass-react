@@ -4,7 +4,7 @@ import axios from "axios";
 // https://apniclass-mern-nodejs.onrender.com/api
 
 const API = axios.create({
-  baseURL: "https://apniclass-mern-nodejs.onrender.com/api",
+  baseURL: "https://apniclass-backend.onrender.com/api",
 });
 
 // authentication
